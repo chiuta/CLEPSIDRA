@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta property="og:title" content="Clepsidra — ceas invers">
+<meta property="og:description" content="Timpul rămas din zi și din săptămână, alarmă și programe pentru zile lucrătoare și weekend. Local, fără telemetrie.">
+<meta property="og:type" content="website">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#1b1330">
+<meta name="description" content="Un ceas cu timpul rămas din zi și săptămână, alarmă și cronometre inverse pentru somn, muncă, mese și timp liber — cu programe separate pentru zilele lucrătoare și weekend.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%8F%B3%3C/text%3E%3C/svg%3E">
+<title>Clepsidra — ceas invers</title>
+<style>
+  :root{
+    --bg-top:#1b1330;
+    --bg-mid:#2a1a3a;
+    --bg-bottom:#3d2417;
+    --ink:#f3ead9;
+    --ink-dim:rgba(243,234,217,0.62);
+    --ink-faint:rgba(243,234,217,0.6);
+    --gold:#d8ab63;
+    --gold-soft:rgba(216,171,99,0.22);
+    --teal:#7fb0a6;
+    --teal-soft:rgba(127,176,166,0.2);
+    --line:rgba(243,234,217,0.14);
+    --cat-somn:#7b7fb5;
+    --cat-deplasare:#7fa0b3;
+    --cat-serviciu:#c1875f;
+    --cat-mese:#c98a80;
+    --cat-timp-liber:#96a878;
+    --cat-altele:#a89a8c;
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ height:100%; }
+
+  body{
+    margin:0;
+    min-height:100vh;
+    background: radial-gradient(ellipse 120% 70% at 50% -10%, var(--bg-mid) 0%, var(--bg-top) 42%, var(--bg-bottom) 100%);
+    background-attachment: fixed;
+    color: var(--ink);
+    font-family: var(--sans);
+    color-scheme: dark;
+    display:flex;
+    align-items:flex-start;   /* nu center: cu align-items:center partea de sus a paginii rămânea tăiată și inaccesibilă */
+    justify-content:center;
+    padding: 3rem 1.25rem;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  main{
+    width:100%;
+    margin: auto 0;
+    max-width: 30rem;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap: 1.85rem;
+    text-align:center;
+  }
+
+  .wordmark h1{
+    font-family: var(--serif);
+    font-weight:400;
+    font-size: clamp(1.6rem, 5vw, 2.15rem);
+    letter-spacing:0.03em;
+    margin:0 0 0.4rem;
+  }
+
+  .tagline{
+    margin:0;
+    font-size:0.88rem;
+    color: var(--ink-dim);
+    font-style:italic;
+    font-family: var(--serif);
+  }
+
+  .arc-wrap{
+    position:relative;
+    width: min(74vw, 300px);
+    aspect-ratio:1/1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+
+  .arc{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    transform: rotate(-90deg);
+    overflow: visible;
+  }
+
+  .arc-track{
+    fill:none;
+    stroke: var(--gold-soft);
+    stroke-width:4;
+  }
+
+  .arc-progress{
+    fill:none;
+    stroke: var(--gold);
+    stroke-width:4;
+    stroke-linecap:round;
+    stroke-dasharray:816.81;
+    stroke-dashoffset:816.81;
+    transition: stroke-dashoffset 0.4s linear;
+    filter: drop-shadow(0 0 6px rgba(216,171,99,0.45));
+    animation: breathe 6s ease-in-out infinite;
+  }
+
+  @keyframes breathe{
+    0%,100%{ filter: drop-shadow(0 0 6px rgba(216,171,99,0.45)); }
+    50%{ filter: drop-shadow(0 0 11px rgba(216,171,99,0.68)); }
+  }
+
+  .hero-time{
+    font-family: var(--serif);
+    font-variant-numeric: tabular-nums;
+    font-size: clamp(2.35rem, 10vw, 3.35rem);
+    letter-spacing:0.02em;
+    font-weight:400;
+  }
+
+  .sub-readout{
+    margin:0;
+    font-size:0.9rem;
+    color: var(--ink-dim);
+    line-height:1.5;
+  }
+
+  .week-countdown{ margin-top:0.2rem; }
+  .week-countdown .label{
+    margin:0 0 0.2rem;
+    font-size:0.78rem;
+    color: var(--ink-faint);
+  }
+  .week-time{
+    font-family: var(--serif);
+    font-variant-numeric: tabular-nums;
+    font-size: clamp(1.15rem, 4.2vw, 1.5rem);
+    color: var(--gold);
+  }
+
+  .divider{
+    width:100%;
+    border:none;
+    border-top:1px solid var(--line);
+    margin:0;
+  }
+
+  .alarm-section{ width:100%; }
+  .schedule-section{ width:100%; }
+
+  .alarm-section h2, .schedule-section h2{
+    font-family: var(--serif);
+    font-style:italic;
+    font-weight:400;
+    font-size:1.05rem;
+    margin:0 0 1rem;
+    color: var(--ink);
+  }
+
+  .now-activity{
+    margin:0 0 0.15rem;
+    font-size:0.95rem;
+    color: var(--ink-dim);
+  }
+  .now-dot{
+    display:inline-block;
+    width:0.5rem;
+    height:0.5rem;
+    border-radius:50%;
+    margin-right:0.4rem;
+    vertical-align:middle;
+    background: transparent;
+  }
+  .now-activity strong{ color:var(--ink); font-weight:600; }
+  .now-activity-time{
+    margin:0 0 1.3rem;
+    font-size:0.82rem;
+    color: var(--ink-faint);
+    min-height:1.1em;
+  }
+
+  .day-bar-wrap{ position:relative; width:100%; margin-bottom:1.4rem; }
+  .day-bar{
+    position:relative;
+    width:100%;
+    height:14px;
+    background: rgba(243,234,217,0.06);
+    border-radius:999px;
+    overflow:hidden;
+  }
+  .day-bar-segment{
+    position:absolute;
+    top:0; bottom:0;
+    opacity:0.85;
+  }
+  .day-bar-now{
+    position:absolute;
+    top:-3px;
+    height:20px;
+    width:2px;
+    background: var(--ink);
+    box-shadow: 0 0 5px rgba(243,234,217,0.7);
+    transition: left 1s linear;
+    pointer-events:none;
+  }
+  .day-bar-ticks{
+    display:flex;
+    justify-content:space-between;
+    margin-top:0.4rem;
+    font-size:0.7rem;
+    color: var(--ink-faint);
+  }
+
+  .dot{ width:0.55rem; height:0.55rem; border-radius:50%; flex-shrink:0; display:inline-block; }
+
+  .category-list{
+    list-style:none;
+    margin:0 0 1.4rem;
+    padding:0;
+    display:flex;
+    flex-direction:column;
+    gap:0.5rem;
+    text-align:left;
+  }
+  .category-row{
+    display:flex;
+    align-items:center;
+    gap:0.6rem;
+    font-size:0.88rem;
+    color: var(--ink-dim);
+    padding:0.3rem 0.5rem;
+    border-radius:8px;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+  .category-row .cat-name{ flex:1; }
+  .category-row .cat-time{
+    font-variant-numeric: tabular-nums;
+    font-family: var(--serif);
+  }
+  .category-row.active{
+    background: rgba(243,234,217,0.05);
+    color: var(--ink);
+  }
+  .category-row.active .cat-time{ font-size:1.05em; }
+
+  .alarm-controls{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:center;
+    gap:0.9rem;
+  }
+
+  input[type=time]{
+    background:transparent;
+    border:1px solid var(--line);
+    border-radius:7px;
+    color:var(--ink);
+    font-family:var(--sans);
+    font-variant-numeric: tabular-nums;
+    font-size:1rem;
+    padding:0.5rem 0.65rem;
+    color-scheme: dark;
+  }
+  input[type=time]:focus-visible{
+    outline:2px solid var(--teal);
+    outline-offset:2px;
+  }
+
+  .repeat-toggle{
+    display:flex;
+    align-items:center;
+    gap:0.45rem;
+    font-size:0.85rem;
+    color: var(--ink-dim);
+    cursor:pointer;
+    user-select:none;
+  }
+  .repeat-toggle input{ accent-color: var(--teal); width:1rem; height:1rem; }
+
+  button{
+    font-family:var(--sans);
+    font-size:0.85rem;
+    background:transparent;
+    color: var(--teal);
+    border:1px solid var(--teal-soft);
+    border-radius: 999px;
+    padding:0.55rem 1.2rem;
+    cursor:pointer;
+    transition: background 0.2s ease;
+  }
+  button:hover{ background: var(--teal-soft); }
+  button:focus-visible{ outline:2px solid var(--teal); outline-offset:2px; }
+
+  .alarm-note{ margin:0.5rem 0 0; font-size:0.78rem; line-height:1.5; color: var(--ink-dim); max-width:30rem; }
+  .editor-warn{ margin:0.6rem 0 0; font-size:0.78rem; color: var(--gold); min-height:1em; }
+  .alarm-hint{
+    margin:0.6rem 0 0;
+    font-size:0.8rem;
+    color: var(--ink-faint);
+    min-height:1.1em;
+  }
+
+  .alarm-countdown-wrap{
+    margin-top:1.2rem;
+    overflow:hidden;
+    max-height:0;
+    opacity:0;
+    transition: max-height 0.35s ease, opacity 0.35s ease;
+  }
+  .alarm-countdown-wrap.open{
+    max-height:8rem;
+    opacity:1;
+  }
+  .alarm-countdown-wrap p{
+    margin:0 0 0.3rem;
+    font-size:0.8rem;
+    color: var(--ink-faint);
+  }
+  .alarm-time{
+    font-family: var(--serif);
+    font-variant-numeric: tabular-nums;
+    font-size: clamp(1.5rem, 6vw, 2.05rem);
+    color: var(--teal);
+  }
+
+  .editor-toggle{ font-size:0.8rem; }
+
+  .schedule-editor{
+    margin-top:1.2rem;
+    text-align:left;
+  }
+
+  .editor-tabs{ display:flex; gap:0.5rem; margin-bottom:1rem; }
+  .editor-tab{
+    flex:1;
+    font-size:0.82rem;
+    padding:0.5rem 0.7rem;
+    border-radius:8px;
+    background:transparent;
+    border:1px solid var(--line);
+    color:var(--ink-faint);
+  }
+  .editor-tab.active{
+    color:var(--ink);
+    border-color: var(--teal-soft);
+    background: rgba(127,176,166,0.12);
+  }
+
+  .editor-rows{
+    display:flex;
+    flex-direction:column;
+    gap:0.5rem;
+    margin-bottom:0.8rem;
+  }
+  .editor-row{
+    display:flex;
+    align-items:center;
+    gap:0.5rem;
+    flex-wrap:wrap;
+  }
+  .editor-row input[type=time]{
+    background:transparent;
+    border:1px solid var(--line);
+    border-radius:6px;
+    color:var(--ink);
+    font-family:var(--sans);
+    font-size:0.85rem;
+    padding:0.35rem 0.5rem;
+    color-scheme: dark;
+  }
+  .editor-sep{ color: var(--ink-faint); }
+
+  .cat-picker{ position:relative; flex:1; min-width:8rem; }
+  .cat-picker-btn{
+    width:100%;
+    display:flex;
+    align-items:center;
+    gap:0.5rem;
+    background:transparent;
+    border:1px solid var(--line);
+    border-radius:6px;
+    color:var(--ink);
+    font-family:var(--sans);
+    font-size:0.85rem;
+    padding:0.35rem 0.5rem;
+    cursor:pointer;
+    text-align:left;
+  }
+  .cat-picker-label{ flex:1; }
+  .cat-picker-caret{ color:var(--ink-faint); font-size:0.65rem; }
+  .cat-picker-list{
+    position:absolute;
+    top:calc(100% + 4px);
+    left:0;
+    right:0;
+    z-index:20;
+    list-style:none;
+    margin:0;
+    padding:0.3rem;
+    background: var(--bg-bottom);
+    border:1px solid var(--line);
+    border-radius:8px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.5);
+    max-height:14rem;
+    overflow-y:auto;
+  }
+  .cat-picker-list li{
+    display:flex;
+    align-items:center;
+    gap:0.5rem;
+    padding:0.45rem 0.55rem;
+    border-radius:6px;
+    color:var(--ink-dim);
+    font-size:0.85rem;
+    cursor:pointer;
+    outline:none;
+  }
+  .cat-picker-list li:hover,
+  .cat-picker-list li:focus{ background: rgba(243,234,217,0.1); color:var(--ink); }
+  .cat-picker-list li.selected{ color:var(--ink); font-weight:600; }
+
+  .remove-block-btn{
+    background:transparent;
+    border:1px solid var(--line);
+    color: var(--ink-faint);
+    border-radius:50%;
+    width:1.8rem;
+    height:1.8rem;
+    padding:0;
+    line-height:1;
+    font-size:1rem;
+    flex-shrink:0;
+  }
+  .remove-block-btn:hover{ background: rgba(243,234,217,0.08); color:var(--ink); }
+  .editor-note{
+    margin:0.7rem 0 0;
+    font-size:0.75rem;
+    color: var(--ink-faint);
+  }
+
+  .flash-overlay{
+    position:fixed;
+    inset:0;
+    background: var(--gold);
+    opacity:0;
+    pointer-events:none;
+    z-index:5;
+  }
+  .flash-overlay.active{
+    animation: flashPulse 0.9s ease-in-out 3;
+  }
+  @keyframes flashPulse{
+    0%,100%{ opacity:0; }
+    50%{ opacity:0.16; }
+  }
+
+  .alarm-banner{
+    position:fixed;
+    left:50%;
+    bottom:1.75rem;
+    transform: translateX(-50%);
+    background: var(--bg-bottom);
+    border:1px solid var(--gold);
+    border-radius:12px;
+    padding:1rem 1.3rem;
+    display:flex;
+    align-items:center;
+    gap:1.1rem;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.45);
+    z-index:10;
+    max-width: calc(100vw - 2.5rem);
+  }
+  .alarm-banner[hidden]{ display:none; }
+  .alarm-banner p{ margin:0; font-family:var(--serif); font-size:0.98rem; }
+  .alarm-banner button{ color:var(--gold); border-color:var(--gold-soft); flex-shrink:0; }
+  .alarm-banner button:hover{ background: var(--gold-soft); }
+
+  footer p{
+    margin:0;
+    font-size:0.78rem;
+    color: var(--ink-faint);
+    font-family:var(--serif);
+    font-style:italic;
+    max-width:24rem;
+    line-height:1.5;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .arc-progress{ animation:none; transition:none; }
+    .flash-overlay.active{ animation:none; opacity:0.16; }
+    .alarm-countdown-wrap{ transition:none; }
+    .day-bar-now{ transition:none; }
+  }
+
+  @media (max-width: 380px){
+    .alarm-controls{ flex-direction:column; }
+    .editor-row{ justify-content:center; }
+  }
+</style>
+</head>
+<body>
+<div class="flash-overlay" id="flashOverlay" aria-hidden="true"></div>
+
+<main>
+  <header class="wordmark">
+    <h1>Clepsidra</h1>
+    <p class="tagline">nu timpul scurs, ci timpul rămas</p>
+  </header>
+
+  <section class="day-clock" aria-label="Timp rămas din ziua de azi">
+    <div class="arc-wrap">
+      <svg class="arc" viewBox="0 0 300 300" aria-hidden="true">
+        <circle class="arc-track" cx="150" cy="150" r="130"/>
+        <circle class="arc-progress" cx="150" cy="150" r="130"/>
+      </svg>
+      <div class="hero-time" id="dayCountdown" role="timer" aria-live="off">23:59:59</div>
+    </div>
+    <p class="sub-readout" id="subReadout">Este --:--:--.</p>
+    <div class="week-countdown">
+      <p class="label" id="weekLabel">rămas din weekend</p>
+      <div class="week-time" id="weekCountdown" role="timer" aria-live="off">0z 00:00:00</div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <section class="schedule-section" aria-label="Programul zilei">
+    <h2 id="scheduleHeading">programul zilei</h2>
+
+    <p class="now-activity" id="nowActivity"><span class="now-dot" id="nowDot"></span>Acum: <strong id="nowActivityLabel">—</strong></p>
+    <p class="now-activity-time" id="nowActivityTime"></p>
+
+    <div class="day-bar-wrap">
+      <div class="day-bar" id="dayBar" role="img" aria-label="Bară orară cu activitățile programate pentru azi"></div>
+      <div class="day-bar-now" id="dayBarNow"></div>
+      <div class="day-bar-ticks" aria-hidden="true">
+        <span>00</span><span>06</span><span>12</span><span>18</span><span>24</span>
+      </div>
+    </div>
+
+    <ul class="category-list" id="categoryList">
+      <li class="category-row" data-cat="somn"><span class="dot" style="background:var(--cat-somn)"></span><span class="cat-name">somn</span><span class="cat-time">00:00</span></li>
+      <li class="category-row" data-cat="deplasare"><span class="dot" style="background:var(--cat-deplasare)"></span><span class="cat-name">deplasare</span><span class="cat-time">00:00</span></li>
+      <li class="category-row" data-cat="serviciu"><span class="dot" style="background:var(--cat-serviciu)"></span><span class="cat-name">serviciu</span><span class="cat-time">00:00</span></li>
+      <li class="category-row" data-cat="mese"><span class="dot" style="background:var(--cat-mese)"></span><span class="cat-name">mese</span><span class="cat-time">00:00</span></li>
+      <li class="category-row" data-cat="timp-liber"><span class="dot" style="background:var(--cat-timp-liber)"></span><span class="cat-name">timp liber</span><span class="cat-time">00:00</span></li>
+      <li class="category-row" data-cat="altele"><span class="dot" style="background:var(--cat-altele)"></span><span class="cat-name">altele</span><span class="cat-time">00:00</span></li>
+    </ul>
+
+    <button type="button" class="editor-toggle" id="editorToggleBtn" aria-expanded="false" aria-controls="scheduleEditor">editează programul</button>
+
+    <div class="schedule-editor" id="scheduleEditor" hidden>
+      <div class="editor-tabs" role="tablist">
+        <button type="button" class="editor-tab" data-template="weekday" role="tab" id="tabWeekday">zile lucrătoare</button>
+        <button type="button" class="editor-tab" data-template="weekend" role="tab" id="tabWeekend">weekend</button>
+      </div>
+      <div class="editor-rows" id="editorRows"></div>
+      <button type="button" class="add-block-btn" id="addBlockBtn">+ adaugă interval</button>
+      <p class="editor-warn" id="editorWarn" role="status"></p>
+      <p class="editor-note">modificările se salvează automat, doar în acest browser. Un interval cu început = sfârșit este ignorat; intervalele care trec de miezul nopții (ex. 23:00–07:00) sunt permise.</p>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <section class="alarm-section" aria-label="Alarmă">
+    <h2>alarmă</h2>
+    <div class="alarm-controls">
+      <label for="alarmInput" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);">Ora alarmei</label>
+      <input type="time" id="alarmInput">
+      <label class="repeat-toggle">
+        <input type="checkbox" id="repeatDaily" checked>
+        <span>repetă zilnic</span>
+      </label>
+      <button id="alarmToggleBtn" type="button">activează</button>
+    </div>
+    <p class="alarm-hint" id="alarmHint" role="status"></p>
+    <p class="alarm-note" id="alarmNote">Alarma sună doar cât această pagină rămâne deschisă și activă. Cu fila în fundal, cu ecranul blocat pe telefon sau cu pagina închisă poate să sune cu întârziere sau deloc. Nu te baza pe ea pentru lucruri importante (medicamente, trenuri, examene) — folosește și alarma sistemului.</p>
+
+    <div class="alarm-countdown-wrap" id="alarmCountdownWrap" aria-hidden="true">
+      <p>rămas până la alarmă</p>
+      <div class="alarm-time" id="alarmCountdown" role="timer" aria-live="off">00:00:00</div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Pornind de la un gând din cartea Nemurirea, despre ceasul biologic.</p>
+  </footer>
+</main>
+
+<div class="alarm-banner" id="alarmBanner" role="alert" hidden>
+  <p>S-a împlinit timpul.</p>
+  <button id="dismissBtn" type="button">oprește</button>
+</div>
+
+<noscript>
+  <p style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:2rem;text-align:center;background:#1b1330;color:#f3ead9;font-family:sans-serif;">
+    Acest ceas are nevoie de JavaScript activat pentru a funcționa.
+  </p>
+</noscript>
+
+<script>
+(function(){
+  'use strict';
+
+  var dayCountdownEl = document.getElementById('dayCountdown');
+  var subReadoutEl = document.getElementById('subReadout');
+  var arcProgress = document.querySelector('.arc-progress');
+  var alarmInput = document.getElementById('alarmInput');
+  var repeatDaily = document.getElementById('repeatDaily');
+  var alarmToggleBtn = document.getElementById('alarmToggleBtn');
+  var alarmHint = document.getElementById('alarmHint');
+  var alarmCountdownWrap = document.getElementById('alarmCountdownWrap');
+  var alarmCountdownEl = document.getElementById('alarmCountdown');
+  var alarmBanner = document.getElementById('alarmBanner');
+  var dismissBtn = document.getElementById('dismissBtn');
+  var flashOverlay = document.getElementById('flashOverlay');
+
+  var weekLabelEl = document.getElementById('weekLabel');
+  var weekCountdownEl = document.getElementById('weekCountdown');
+  var scheduleHeadingEl = document.getElementById('scheduleHeading');
+  var nowDotEl = document.getElementById('nowDot');
+  var nowActivityLabelEl = document.getElementById('nowActivityLabel');
+  var nowActivityTimeEl = document.getElementById('nowActivityTime');
+  var dayBarEl = document.getElementById('dayBar');
+  var dayBarNowEl = document.getElementById('dayBarNow');
+  var categoryListEl = document.getElementById('categoryList');
+  var editorToggleBtn = document.getElementById('editorToggleBtn');
+  var scheduleEditor = document.getElementById('scheduleEditor');
+  var editorRowsEl = document.getElementById('editorRows');
+  var addBlockBtn = document.getElementById('addBlockBtn');
+
+  var CIRC = 2 * Math.PI * 130;
+  var HHMM = /^([01]\d|2[0-3]):[0-5]\d$/;
+  var MAX_BLOCKS = 48;
+  var editorWarnEl = document.getElementById('editorWarn');
+  var alarmNoteEl = document.getElementById('alarmNote');
+
+  function startOfDay(d){ return new Date(d.getFullYear(), d.getMonth(), d.getDate(), 0,0,0,0); }
+  // Next local midnight, from the calendar (not +24h): a DST day is 23 or 25 hours long.
+  function nextMidnight(d){ return new Date(d.getFullYear(), d.getMonth(), d.getDate()+1, 0,0,0,0); }
+
+  var DAY_NAMES = ['duminică','luni','marți','miercuri','joi','vineri','sâmbătă'];
+  var MONTH_NAMES = ['ianuarie','februarie','martie','aprilie','mai','iunie','iulie','august','septembrie','octombrie','noiembrie','decembrie'];
+
+  function pad(n){ return String(n).padStart(2,'0'); }
+
+  function formatDate(d){
+    return DAY_NAMES[d.getDay()] + ', ' + d.getDate() + ' ' + MONTH_NAMES[d.getMonth()] + ' ' + d.getFullYear();
+  }
+
+  var alarmActive = false;
+  var alarmTargetMs = null;
+  var alarmFiring = false;
+  var audioCtx = null;
+  var lastBeepAt = 0;
+  var baseTitle = document.title;
+
+  function loadAlarmState(){
+    try{
+      var raw = localStorage.getItem('clepsidra.alarm');
+      var saved = raw ? JSON.parse(raw) : null;
+      if(saved && typeof saved.time === 'string' && HHMM.test(saved.time)){
+        alarmInput.value = saved.time;
+        repeatDaily.checked = saved.repeat !== false;
+        if(saved.active === true){ activateAlarm(false); }
+      }
+    }catch(e){ /* stare locală indisponibilă — pornim din nou */ }
+  }
+
+  function saveAlarmState(){
+    try{
+      localStorage.setItem('clepsidra.alarm', JSON.stringify({
+        time: alarmInput.value,
+        repeat: repeatDaily.checked,
+        active: alarmActive
+      }));
+    }catch(e){ /* stocarea locală nu e disponibilă în acest context */ }
+  }
+
+  function computeNextAlarmDate(hh, mm){
+    var now = new Date();
+    var target = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hh, mm, 0, 0);
+    if(target.getTime() <= now.getTime()){
+      target.setDate(target.getDate()+1);
+    }
+    return target;
+  }
+
+  function unlockAudio(){
+    // iOS/Safari only allow sound after a user gesture: create + resume the context on the click.
+    try{
+      var Ctx = window.AudioContext || window.webkitAudioContext;
+      if(!Ctx) return;
+      audioCtx = audioCtx || new Ctx();
+      if(audioCtx.state === 'suspended' && audioCtx.resume){ audioCtx.resume(); }
+      var buf = audioCtx.createBuffer(1,1,22050), src = audioCtx.createBufferSource();
+      src.buffer = buf; src.connect(audioCtx.destination); src.start(0);
+    }catch(e){ /* sunet indisponibil */ }
+  }
+
+  function activateAlarm(fromGesture){
+    if(!alarmInput.value || !HHMM.test(alarmInput.value)){
+      alarmHint.textContent = 'alege o oră pentru alarmă';
+      alarmInput.focus();
+      return;
+    }
+    alarmHint.textContent = '';
+    var parts = alarmInput.value.split(':').map(Number);
+    var target = computeNextAlarmDate(parts[0], parts[1]);
+    alarmTargetMs = target.getTime();
+    alarmActive = true;
+    alarmFiring = false;
+    alarmToggleBtn.textContent = 'dezactivează';
+    alarmCountdownWrap.classList.add('open');
+    alarmCountdownWrap.setAttribute('aria-hidden','false');
+    if(fromGesture === true){
+      unlockAudio();
+      // Permisiunea pentru notificări se cere doar la clic explicit, niciodată la încărcarea paginii.
+      if('Notification' in window && Notification.permission === 'default'){
+        try{ Notification.requestPermission(); }catch(e){ /* ignorat */ }
+      }
+    }
+    saveAlarmState();
+    tick();
+  }
+
+  function deactivateAlarm(){
+    alarmActive = false;
+    alarmTargetMs = null;
+    alarmToggleBtn.textContent = 'activează';
+    alarmCountdownWrap.classList.remove('open');
+    alarmCountdownWrap.setAttribute('aria-hidden','true');
+    saveAlarmState();
+  }
+
+  alarmToggleBtn.addEventListener('click', function(){
+    if(alarmActive){ deactivateAlarm(); } else { activateAlarm(true); }
+  });
+
+  alarmInput.addEventListener('change', function(){
+    if(alarmActive){ activateAlarm(false); }
+  });
+  repeatDaily.addEventListener('change', saveAlarmState);
+
+  function beep(){
+    try{
+      audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+      if(audioCtx.state === 'suspended' && audioCtx.resume){ audioCtx.resume(); }
+      var now = audioCtx.currentTime;
+      for(var i=0;i<4;i++){
+        var osc = audioCtx.createOscillator();
+        var gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.value = (i % 2 === 0) ? 880 : 660;
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        var t0 = now + i*0.55;
+        gain.gain.setValueAtTime(0.0001, t0);
+        gain.gain.exponentialRampToValueAtTime(0.28, t0+0.03);
+        gain.gain.exponentialRampToValueAtTime(0.0001, t0+0.4);
+        osc.start(t0);
+        osc.stop(t0+0.42);
+      }
+    }catch(e){ /* sunet indisponibil — semnalul vizual rămâne */ }
+  }
+
+  function fireAlarm(lateMs){
+    alarmFiring = true;
+    var late = lateMs > 90000;   // pagina a fost suspendată (fundal / ecran blocat) și a prins alarma târziu
+    var msg = late ? 'S-a împlinit timpul (alarma a fost cu ' + Math.round(lateMs/60000) + ' min în urmă; pagina a fost suspendată).' : 'S-a împlinit timpul.';
+    alarmBanner.querySelector('p').textContent = msg;
+    alarmBanner.hidden = false;
+    flashOverlay.classList.add('active');
+    document.title = '\u23F0 ' + baseTitle;
+    lastBeepAt = Date.now();
+    beep();
+    try{ dismissBtn.focus(); }catch(e){}
+    if('Notification' in window){
+      try{
+        if(Notification.permission === 'granted'){
+          new Notification('Clepsidra', { body: msg });
+        }
+      }catch(e){ /* notificări indisponibile în acest context */ }
+    }
+  }
+
+  function dismissAlarm(){
+    alarmFiring = false;
+    alarmBanner.hidden = true;
+    flashOverlay.classList.remove('active');
+    document.title = baseTitle;
+    if(repeatDaily.checked){
+      activateAlarm(false);
+    }else{
+      deactivateAlarm();
+    }
+  }
+  dismissBtn.addEventListener('click', dismissAlarm);
+
+  /* ---- programul zilei: categorii, blocuri orare, zi lucrătoare vs weekend ---- */
+
+  var CATEGORIES = [
+    {id:'somn', label:'somn'},
+    {id:'deplasare', label:'deplasare'},
+    {id:'serviciu', label:'serviciu'},
+    {id:'mese', label:'mese'},
+    {id:'timp-liber', label:'timp liber'},
+    {id:'altele', label:'altele'}
+  ];
+  var CATEGORY_COLOR = {
+    'somn':'var(--cat-somn)',
+    'deplasare':'var(--cat-deplasare)',
+    'serviciu':'var(--cat-serviciu)',
+    'mese':'var(--cat-mese)',
+    'timp-liber':'var(--cat-timp-liber)',
+    'altele':'var(--cat-altele)'
+  };
+
+  var DEFAULT_WEEKDAY_BLOCKS = [
+    {start:'23:00', end:'07:00', cat:'somn'},
+    {start:'07:00', end:'07:30', cat:'mese'},
+    {start:'07:30', end:'08:00', cat:'deplasare'},
+    {start:'08:00', end:'12:30', cat:'serviciu'},
+    {start:'12:30', end:'13:00', cat:'mese'},
+    {start:'13:00', end:'16:30', cat:'serviciu'},
+    {start:'16:30', end:'17:00', cat:'deplasare'},
+    {start:'17:00', end:'19:00', cat:'timp-liber'},
+    {start:'19:00', end:'19:30', cat:'mese'},
+    {start:'19:30', end:'22:30', cat:'timp-liber'},
+    {start:'22:30', end:'23:00', cat:'altele'}
+  ];
+  var DEFAULT_WEEKEND_BLOCKS = [
+    {start:'23:00', end:'07:00', cat:'somn'},
+    {start:'07:00', end:'07:30', cat:'mese'},
+    {start:'07:30', end:'13:00', cat:'timp-liber'},
+    {start:'13:00', end:'13:30', cat:'mese'},
+    {start:'13:30', end:'19:30', cat:'timp-liber'},
+    {start:'19:30', end:'20:00', cat:'mese'},
+    {start:'20:00', end:'23:00', cat:'timp-liber'}
+  ];
+  function validCat(id){
+    for(var i=0;i<CATEGORIES.length;i++){ if(CATEGORIES[i].id===id) return true; }
+    return false;
+  }
+  // Orice vine din localStorage este nesigur: păstrăm doar blocuri HH:MM valide cu categorie cunoscută.
+  function sanitizeBlocks(arr){
+    if(!Array.isArray(arr)) return null;
+    var out = [];
+    arr.slice(0, MAX_BLOCKS).forEach(function(b){
+      if(b && typeof b === 'object' && typeof b.start === 'string' && typeof b.end === 'string' &&
+         HHMM.test(b.start) && HHMM.test(b.end) && typeof b.cat === 'string' && validCat(b.cat)){
+        out.push({start:b.start, end:b.end, cat:b.cat});
+      }
+    });
+    return out.length ? out : null;
+  }
+  function cloneBlocks(arr){ return arr.map(function(b){ return {start:b.start, end:b.end, cat:b.cat}; }); }
+  var weekdayBlocks = cloneBlocks(DEFAULT_WEEKDAY_BLOCKS);
+  var weekendBlocks = cloneBlocks(DEFAULT_WEEKEND_BLOCKS);
+  var editingTemplate = 'weekday';
+
+  function categoryLabel(id){
+    for(var i=0;i<CATEGORIES.length;i++){ if(CATEGORIES[i].id===id) return CATEGORIES[i].label; }
+    return id;
+  }
+
+  function fmtHMS(ms){
+    var totalSec = Math.max(0, Math.floor(ms/1000));
+    var h = Math.floor(totalSec/3600), m = Math.floor((totalSec%3600)/60), s = totalSec%60;
+    return pad(h)+':'+pad(m)+':'+pad(s);
+  }
+  function fmtHM(ms){
+    var totalMin = Math.max(0, Math.round(ms/60000));
+    var h = Math.floor(totalMin/60), m = totalMin%60;
+    return pad(h)+':'+pad(m);
+  }
+  function fmtDurDays(ms){
+    var totalSec = Math.max(0, Math.floor(ms/1000));
+    var days = Math.floor(totalSec/86400);
+    var rem = totalSec%86400;
+    var h=Math.floor(rem/3600), m=Math.floor((rem%3600)/60), s=rem%60;
+    return (days>0 ? days+'z ' : '') + pad(h)+':'+pad(m)+':'+pad(s);
+  }
+
+  function timeStrToMinutes(str){
+    var parts = str.split(':').map(Number);
+    return parts[0]*60+parts[1];
+  }
+
+  function isWeekendDate(d){
+    var day = d.getDay();
+    return (day === 0 || day === 6);
+  }
+  function templateForDate(d){
+    return isWeekendDate(d) ? weekendBlocks : weekdayBlocks;
+  }
+  function templateKeyForDate(d){
+    return isWeekendDate(d) ? 'weekend' : 'weekday';
+  }
+
+  function occurrencesForDayOffset(now, dayOffset){
+    var refDate = new Date(now.getFullYear(), now.getMonth(), now.getDate()+dayOffset);
+    var template = templateForDate(refDate);
+    var occs = [];
+    template.forEach(function(b){
+      if(b.start === b.end) return;
+      var startMin = timeStrToMinutes(b.start);
+      var endMin = timeStrToMinutes(b.end);
+      var occStart = new Date(refDate.getFullYear(), refDate.getMonth(), refDate.getDate(), Math.floor(startMin/60), startMin%60, 0, 0);
+      // Sfârșitul se calculează pe ceas local (nu start + durată fixă), ca să fie corect și în zilele cu schimbare de oră.
+      var occEnd = new Date(refDate.getFullYear(), refDate.getMonth(), refDate.getDate() + (endMin <= startMin ? 1 : 0), Math.floor(endMin/60), endMin%60, 0, 0);
+      occs.push({start:occStart, end:occEnd, block:b});
+    });
+    return occs;
+  }
+
+  function currentActiveBlock(now){
+    var occs = occurrencesForDayOffset(now,-1).concat(occurrencesForDayOffset(now,0));
+    var found = null;
+    for(var i=0;i<occs.length;i++){
+      if(now.getTime() >= occs[i].start.getTime() && now.getTime() < occs[i].end.getTime()){
+        found = { block: occs[i].block, endsAt: occs[i].end };   // la suprapunere câștigă ultimul, ca în bara zilei
+      }
+    }
+    return found;
+  }
+
+  function remainingTodayForCategory(cat, now){
+    var midnight = nextMidnight(now).getTime();
+    var occs = occurrencesForDayOffset(now,-1).concat(occurrencesForDayOffset(now,0));
+    var spans = [];
+    occs.forEach(function(occ){
+      if(occ.block.cat !== cat) return;
+      var overlapStart = Math.max(occ.start.getTime(), now.getTime());
+      var overlapEnd = Math.min(occ.end.getTime(), midnight);
+      if(overlapEnd > overlapStart){ spans.push([overlapStart, overlapEnd]); }
+    });
+    // reuniunea intervalelor: blocuri suprapuse din aceeași categorie nu se numără de două ori
+    spans.sort(function(a,b){ return a[0]-b[0]; });
+    var total = 0, curS = null, curE = null;
+    spans.forEach(function(sp){
+      if(curS === null){ curS = sp[0]; curE = sp[1]; }
+      else if(sp[0] <= curE){ curE = Math.max(curE, sp[1]); }
+      else { total += curE - curS; curS = sp[0]; curE = sp[1]; }
+    });
+    if(curS !== null) total += curE - curS;
+    return total;
+  }
+
+  function getWeekCountdownInfo(now){
+    var day = now.getDay();
+    var isWknd = (day === 0 || day === 6);
+    var targetDate, label;
+    if(isWknd){
+      label = 'weekend';
+      var daysUntilMonday = (8 - day) % 7;
+      targetDate = new Date(now.getFullYear(), now.getMonth(), now.getDate()+daysUntilMonday, 0,0,0,0);
+    }else{
+      label = 'lucru';
+      var daysUntilSaturday = (6 - day) % 7;
+      targetDate = new Date(now.getFullYear(), now.getMonth(), now.getDate()+daysUntilSaturday, 0,0,0,0);
+    }
+    return { label: label, remainingMs: targetDate.getTime() - now.getTime() };
+  }
+
+  function loadSchedule(){
+    try{
+      var raw = localStorage.getItem('clepsidra.schedule');
+      if(raw){
+        var parsed = JSON.parse(raw);
+        var wd = parsed && sanitizeBlocks(parsed.weekday);
+        var we = parsed && sanitizeBlocks(parsed.weekend);
+        if(wd){ weekdayBlocks = wd; }
+        if(we){ weekendBlocks = we; }
+      }
+    }catch(e){ /* folosim programele implicite */ }
+  }
+  function saveSchedule(){
+    try{
+      localStorage.setItem('clepsidra.schedule', JSON.stringify({ weekday: weekdayBlocks, weekend: weekendBlocks }));
+    }catch(e){ /* stocare indisponibilă */ }
+  }
+
+  function addSegment(startMin, endMin, color){
+    var seg = document.createElement('div');
+    seg.className = 'day-bar-segment';
+    seg.style.left = (startMin/1440*100)+'%';
+    seg.style.width = ((endMin-startMin)/1440*100)+'%';
+    seg.style.background = color;
+    dayBarEl.appendChild(seg);
+  }
+
+  function renderDayBar(now){
+    dayBarEl.innerHTML = '';
+    var todayStart = startOfDay(now).getTime();
+    var todayEnd = nextMidnight(now).getTime();
+    var dayMin = (todayEnd - todayStart)/60000;   // 1380 / 1440 / 1500 în zilele cu schimbare de oră
+    var occs = occurrencesForDayOffset(now,-1).concat(occurrencesForDayOffset(now,0));
+    occs.forEach(function(occ){
+      var segStart = Math.max(occ.start.getTime(), todayStart);
+      var segEnd = Math.min(occ.end.getTime(), todayEnd);
+      if(segEnd <= segStart) return;
+      var startMin = (segStart - todayStart)/60000/dayMin*1440;
+      var endMin = (segEnd - todayStart)/60000/dayMin*1440;
+      addSegment(startMin, endMin, CATEGORY_COLOR[occ.block.cat] || 'var(--ink-faint)');
+    });
+  }
+
+  function activeBlocksArray(){
+    return editingTemplate === 'weekend' ? weekendBlocks : weekdayBlocks;
+  }
+
+  function closeAllCatPickers(){
+    document.querySelectorAll('.cat-picker-list').forEach(function(list){
+      list.hidden = true;
+      var picker = list.closest('.cat-picker');
+      var btn = picker && picker.querySelector('.cat-picker-btn');
+      if(btn) btn.setAttribute('aria-expanded','false');
+    });
+  }
+
+  function catOptionsHTML(selectedCat){
+    return CATEGORIES.map(function(c){
+      return '<li role="option" tabindex="-1" data-value="'+c.id+'" class="'+(c.id===selectedCat?'selected':'')+'" aria-selected="'+(c.id===selectedCat?'true':'false')+'">' +
+        '<span class="dot" style="background:'+CATEGORY_COLOR[c.id]+'"></span>'+c.label+'</li>';
+    }).join('');
+  }
+
+  function blockSpans(b){
+    var s0 = timeStrToMinutes(b.start), e0 = timeStrToMinutes(b.end);
+    if(s0 === e0) return [];
+    return e0 > s0 ? [[s0,e0]] : [[s0,1440],[0,e0]];
+  }
+  function updateEditorWarning(){
+    var arr = activeBlocksArray(), pairs = [], zero = 0;
+    arr.forEach(function(a, i){ if(a.start === a.end) zero++; });
+    for(var i=0;i<arr.length;i++){
+      for(var j=i+1;j<arr.length;j++){
+        var A = blockSpans(arr[i]), B = blockSpans(arr[j]), hit = false;
+        A.forEach(function(x){ B.forEach(function(y){ if(x[0] < y[1] && y[0] < x[1]) hit = true; }); });
+        if(hit) pairs.push((i+1)+' și '+(j+1));
+      }
+    }
+    var msgs = [];
+    if(pairs.length) msgs.push('Intervale suprapuse: ' + pairs.slice(0,4).join('; ') + (pairs.length > 4 ? '…' : '') + ' (la suprapunere se afișează ultimul din listă).');
+    if(zero) msgs.push(zero + ' interval' + (zero === 1 ? '' : 'e') + ' cu început = sfârșit (ignorat).');
+    editorWarnEl.textContent = msgs.join(' ');
+  }
+
+  function renderEditorRows(){
+    var arr = activeBlocksArray();
+    editorRowsEl.innerHTML = '';
+    arr.forEach(function(b, idx){
+      var row = document.createElement('div');
+      row.className = 'editor-row';
+      row.innerHTML =
+        '<input type="time" class="edit-start" value="'+b.start+'" data-idx="'+idx+'" aria-label="Ora de început">' +
+        '<span class="editor-sep">–</span>' +
+        '<input type="time" class="edit-end" value="'+b.end+'" data-idx="'+idx+'" aria-label="Ora de sfârșit">' +
+        '<div class="cat-picker" data-idx="'+idx+'">' +
+          '<button type="button" class="cat-picker-btn" aria-haspopup="listbox" aria-expanded="false">' +
+            '<span class="dot" style="background:'+CATEGORY_COLOR[b.cat]+'"></span>' +
+            '<span class="cat-picker-label">'+categoryLabel(b.cat)+'</span>' +
+            '<span class="cat-picker-caret" aria-hidden="true">\u25be</span>' +
+          '</button>' +
+          '<ul class="cat-picker-list" role="listbox" hidden>'+catOptionsHTML(b.cat)+'</ul>' +
+        '</div>' +
+        '<button type="button" class="remove-block-btn" data-idx="'+idx+'" aria-label="Șterge intervalul">\u00d7</button>';
+      editorRowsEl.appendChild(row);
+    });
+    updateEditorWarning();
+  }
+
+  editorRowsEl.addEventListener('change', function(e){
+    var idxAttr = e.target.getAttribute('data-idx');
+    if(idxAttr === null) return;
+    var idx = Number(idxAttr);
+    var arr = activeBlocksArray();
+    if(!arr[idx]) return;
+    var isStart = e.target.classList.contains('edit-start');
+    var isEnd = e.target.classList.contains('edit-end');
+    if(!isStart && !isEnd) return;
+    if(!HHMM.test(e.target.value)){
+      // oră ștearsă sau invalidă: păstrăm valoarea anterioară în loc să salvăm un bloc stricat
+      e.target.value = isStart ? arr[idx].start : arr[idx].end;
+      return;
+    }
+    if(isStart) arr[idx].start = e.target.value; else arr[idx].end = e.target.value;
+    saveSchedule();
+    updateEditorWarning();
+    renderDayBar(new Date());
+    updateExtras(new Date());
+  });
+
+  editorRowsEl.addEventListener('click', function(e){
+    var removeBtn = e.target.closest('.remove-block-btn');
+    if(removeBtn){
+      var ridx = Number(removeBtn.getAttribute('data-idx'));
+      activeBlocksArray().splice(ridx,1);
+      saveSchedule();
+      renderEditorRows();
+      renderDayBar(new Date());
+      updateExtras(new Date());
+      addBlockBtn.focus();
+      return;
+    }
+
+    var pickerBtn = e.target.closest('.cat-picker-btn');
+    if(pickerBtn){
+      var picker = pickerBtn.closest('.cat-picker');
+      var list = picker.querySelector('.cat-picker-list');
+      var willOpen = list.hidden;
+      closeAllCatPickers();
+      if(willOpen){
+        list.hidden = false;
+        pickerBtn.setAttribute('aria-expanded','true');
+        var sel = list.querySelector('li.selected') || list.querySelector('li');
+        if(sel) sel.focus();
+      }
+      return;
+    }
+
+    var option = e.target.closest('.cat-picker-list li[data-value]');
+    if(option){
+      var picker2 = option.closest('.cat-picker');
+      var idx2 = Number(picker2.getAttribute('data-idx'));
+      var value = option.getAttribute('data-value');
+      activeBlocksArray()[idx2].cat = value;
+      saveSchedule();
+      renderEditorRows();
+      renderDayBar(new Date());
+      updateExtras(new Date());
+      var newBtn = editorRowsEl.querySelector('.cat-picker[data-idx="'+idx2+'"] .cat-picker-btn');
+      if(newBtn) newBtn.focus();
+      return;
+    }
+  });
+
+  editorRowsEl.addEventListener('keydown', function(e){
+    var option = e.target.closest('.cat-picker-list li[data-value]');
+    if(!option) return;
+    var list = option.closest('.cat-picker-list');
+    var items = Array.prototype.slice.call(list.querySelectorAll('li[data-value]'));
+    var pos = items.indexOf(option);
+    if(e.key === 'ArrowDown'){
+      e.preventDefault();
+      items[Math.min(pos+1, items.length-1)].focus();
+    }else if(e.key === 'ArrowUp'){
+      e.preventDefault();
+      items[Math.max(pos-1, 0)].focus();
+    }else if(e.key === 'Enter' || e.key === ' '){
+      e.preventDefault();
+      option.click();
+    }else if(e.key === 'Escape'){
+      e.preventDefault();
+      var picker3 = option.closest('.cat-picker');
+      closeAllCatPickers();
+      var btn3 = picker3.querySelector('.cat-picker-btn');
+      if(btn3) btn3.focus();
+    }
+  });
+
+  document.addEventListener('click', function(e){
+    if(!e.target.closest('.cat-picker')){ closeAllCatPickers(); }
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){ closeAllCatPickers(); }
+  });
+
+  addBlockBtn.addEventListener('click', function(){
+    if(activeBlocksArray().length >= MAX_BLOCKS){ editorWarnEl.textContent = 'Maximum ' + MAX_BLOCKS + ' de intervale.'; return; }
+    activeBlocksArray().push({start:'08:00', end:'09:00', cat:'altele'});
+    saveSchedule();
+    renderEditorRows();
+    renderDayBar(new Date());
+    var rows = editorRowsEl.querySelectorAll('.editor-row');
+    var lastRow = rows[rows.length-1];
+    if(lastRow){ var inp = lastRow.querySelector('.edit-start'); if(inp) inp.focus(); }
+  });
+
+  function setEditingTemplate(key){
+    editingTemplate = key;
+    document.querySelectorAll('.editor-tab').forEach(function(tab){
+      var isActive = tab.getAttribute('data-template') === key;
+      tab.classList.toggle('active', isActive);
+      tab.setAttribute('aria-selected', String(isActive));
+    });
+    renderEditorRows();
+  }
+  document.querySelectorAll('.editor-tab').forEach(function(tab){
+    tab.addEventListener('click', function(){ setEditingTemplate(tab.getAttribute('data-template')); });
+  });
+
+  editorToggleBtn.addEventListener('click', function(){
+    var isOpen = !scheduleEditor.hidden;
+    if(isOpen){
+      scheduleEditor.hidden = true;
+      editorToggleBtn.setAttribute('aria-expanded', 'false');
+      editorToggleBtn.textContent = 'editează programul';
+      closeAllCatPickers();
+    }else{
+      setEditingTemplate(templateKeyForDate(new Date()));
+      scheduleEditor.hidden = false;
+      editorToggleBtn.setAttribute('aria-expanded', 'true');
+      editorToggleBtn.textContent = 'ascunde editorul';
+    }
+  });
+
+  var lastDayType = null;
+
+  function updateExtras(now){
+    var weekInfo = getWeekCountdownInfo(now);
+    weekLabelEl.textContent = weekInfo.label === 'weekend' ? 'rămas din weekend' : 'rămas din săptămâna de lucru';
+    weekCountdownEl.textContent = fmtDurDays(weekInfo.remainingMs);
+
+    var todayType = templateKeyForDate(now);
+    var dayKey = todayType + '|' + now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate();
+    if(dayKey !== lastDayType){
+      lastDayType = dayKey;
+      scheduleHeadingEl.textContent = 'programul zilei (' + (todayType === 'weekend' ? 'weekend' : 'zi lucrătoare') + ')';
+      renderDayBar(now);
+    }
+
+    var active = currentActiveBlock(now);
+    if(active){
+      nowActivityLabelEl.textContent = categoryLabel(active.block.cat);
+      nowActivityTimeEl.textContent = 'se termină în ' + fmtHMS(active.endsAt.getTime() - now.getTime());
+      nowDotEl.style.background = CATEGORY_COLOR[active.block.cat] || 'transparent';
+    }else{
+      nowActivityLabelEl.textContent = '—';
+      nowActivityTimeEl.textContent = '';
+      nowDotEl.style.background = 'transparent';
+    }
+
+    CATEGORIES.forEach(function(c){
+      var remaining = remainingTodayForCategory(c.id, now);
+      var row = categoryListEl.querySelector('[data-cat="'+c.id+'"]');
+      if(!row) return;
+      row.querySelector('.cat-time').textContent = fmtHM(remaining);
+      row.classList.toggle('active', !!(active && active.block.cat === c.id));
+    });
+
+    var dStart = startOfDay(now).getTime();
+    var dFrac = (now.getTime() - dStart) / (nextMidnight(now).getTime() - dStart);
+    dayBarNowEl.style.left = (Math.min(1, Math.max(0, dFrac))*100) + '%';
+  }
+
+  function tick(){
+    var now = new Date();
+
+    var dayStartMs = startOfDay(now).getTime();
+    var dayEndMs = nextMidnight(now).getTime();
+    var dayLenMs = dayEndMs - dayStartMs;          // 23h, 24h sau 25h în zilele cu schimbare de oră
+    var remainingDayMs = dayEndMs - now.getTime();
+    var remainingDaySec = Math.floor(remainingDayMs/1000);
+    var rh = Math.floor(remainingDaySec/3600);
+    var rm = Math.floor((remainingDaySec%3600)/60);
+    var rs = remainingDaySec%60;
+    dayCountdownEl.textContent = pad(rh) + ':' + pad(rm) + ':' + pad(rs);
+
+    var fractionRemaining = remainingDayMs / dayLenMs;
+    var offset = CIRC * (1 - fractionRemaining);
+    arcProgress.style.strokeDashoffset = offset.toFixed(2);
+
+    subReadoutEl.textContent = 'Este ' + pad(now.getHours()) + ':' + pad(now.getMinutes()) + ':' + pad(now.getSeconds()) + ', ' + formatDate(now) + '.';
+
+    if(alarmActive && alarmTargetMs !== null){
+      var remainingAlarmMs = alarmTargetMs - now.getTime();
+      if(remainingAlarmMs <= 0 && !alarmFiring){
+        fireAlarm(-remainingAlarmMs);
+      }
+      var clamped = Math.max(0, remainingAlarmMs);
+      var remainingAlarmSec = Math.floor(clamped/1000);
+      var ah = Math.floor(remainingAlarmSec/3600);
+      var am = Math.floor((remainingAlarmSec%3600)/60);
+      var as = remainingAlarmSec%60;
+      alarmCountdownEl.textContent = pad(ah) + ':' + pad(am) + ':' + pad(as);
+    }
+
+    // cât timp alarma sună, repetă semnalul sonor la fiecare 4 s până la „oprește”
+    if(alarmFiring && Date.now() - lastBeepAt >= 4000){ lastBeepAt = Date.now(); beep(); }
+
+    updateExtras(now);
+  }
+
+  loadSchedule();
+  loadAlarmState();
+  // la revenirea în filă (după fundal/blocare) actualizează imediat și verifică alarma
+  document.addEventListener('visibilitychange', function(){ if(!document.hidden){ tick(); } });
+  tick();
+  var msToNextSecond = 1000 - (Date.now() % 1000);
+  setTimeout(function(){
+    tick();
+    setInterval(tick, 1000);
+  }, msToNextSecond);
+
+})();
+</script>
+</body>
+</html>
