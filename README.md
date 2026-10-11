@@ -18,6 +18,7 @@ Verificate în cod și în teste automate (Chromium headless, ceas simulat, fus 
 - Numărătoare inversă până la următoarea miezul nopții, calculată pe calendarul local: în zilele cu schimbarea orei zilele durează 23 sau 25 de ore și numărătoarea o reflectă.
 - Numărătoare până la sfârșitul săptămânii de lucru (sâmbătă 00:00) sau al weekendului (luni 00:00). Weekendul este fix sâmbătă–duminică; zilele de sărbătoare legală din România sunt tratate ca zile libere (bifa „sărbători legale”, activă implicit, se poate opri), cu afișarea următoarei sărbători și a numelui ei.
 - Program separat pentru zile lucrătoare și weekend, cu șase categorii (somn, deplasare, serviciu, mese, timp liber, altele), bară a zilei, „acum” și timpul rămas pe categorii; editor de intervale (inclusiv peste miezul nopții). Editorul avertizează la intervale suprapuse; un interval cu început = sfârșit este ignorat.
+- Evenimente: până la 6 numărători inverse către o dată și o oră alese de tine (nume până la 40 de caractere), sortate cronologic, cu timpul rămas în zile de 24 de ore (`z`) și `HH:MM:SS`; evenimentele trecute rămân afișate cu „a trecut de …” până le ștergi. Validare cu mesaje (nume lipsă, dată lipsă, limită de 6).
 - Alarmă la o oră aleasă, cu opțiunea „repetă zilnic”, sunet repetat până la „oprește”, flash vizual și notificare de browser (dacă o permiți).
 
 ## Manual de utilizare
@@ -30,7 +31,7 @@ Verificate în cod și în teste automate (Chromium headless, ceas simulat, fus 
 ## Confidențialitate și rețea
 
 - Nu se face nicio cerere de rețea; fișierul nu încarcă resurse externe (are și o politică CSP restrictivă) și nu are telemetrie.
-- Stocare locală (`localStorage`): `clepsidra.schedule` (programele) și `clepsidra.alarm` (ora alarmei, repetare, activă) și `clepsidra.holidays` (bifa sărbători legale). Datele din stocare sunt validate la încărcare; dacă stocarea e blocată, aplicația merge, dar nu păstrează setările.
+- Stocare locală (`localStorage`): `clepsidra.schedule` (programele) și `clepsidra.alarm` (ora alarmei, repetare, activă) și `clepsidra.holidays` (bifa sărbători legale) și `clepsidra.events` (evenimentele). Datele din stocare sunt validate la încărcare; dacă stocarea e blocată, aplicația merge, dar nu păstrează setările.
 - Permisiuni: notificări (cerute doar la clicul pe „activează”) și sunet.
 
 ## Limite și avertismente
@@ -46,6 +47,9 @@ Verificate în cod și în teste automate (Chromium headless, ceas simulat, fus 
 Descarcă `index.html` și deschide-l în browser; funcționează complet fără internet.
 
 ## Istoric / Changelog
+
+### 11 octombrie 2026 (a doua intrare)
+- Funcție nouă: „evenimente” — numărători inverse către date alese de utilizator, păstrate local (testat: validare, adăugare, sortare, trecut, ștergere, persistență la reîncărcare, limita de 6).
 
 ### 11 octombrie 2026
 - Verificare la 11 octombrie 2026: axe 0 violări, fără erori în consolă, fără depășire orizontală la 360 px; numărătorile se calculează dinamic din ceasul local (inclusiv schimbarea orei din 25 octombrie 2026), deci nu conțin date fixe perimate.

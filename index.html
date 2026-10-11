@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-DxI2LJ3iTG5OwdGYT+dT/mMLh3yn95MgCQ9TKmCUKuk='; style-src 'unsafe-inline'; img-src data:; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-gDNu8DEf7EIxzLQL4rCfmD/Eep9hGsgADpf36+eqdAQ='; style-src 'unsafe-inline'; img-src data:; base-uri 'none'; form-action 'none'; object-src 'none'">
 <meta property="og:title" content="Clepsidra — ceas invers">
 <meta property="og:description" content="Timpul rămas din zi și din săptămână, alarmă și programe pentru zile lucrătoare și weekend. Local, fără telemetrie.">
 <meta property="og:type" content="website">
@@ -510,6 +510,25 @@
     .alarm-controls{ flex-direction:column; }
     .editor-row{ justify-content:center; }
   }
+
+  /* r7: numărători inverse către evenimente */
+  .events-section{ width:100%; }
+  .events-section h2{ font-family:var(--serif); font-style:italic; font-weight:400; font-size:1.05rem; margin:0 0 1rem; color:var(--ink); }
+  .event-form{ display:flex; flex-wrap:wrap; gap:0.7rem; align-items:center; justify-content:center; }
+  .event-form input[type=text], .event-form input[type=datetime-local]{
+    background:transparent; border:1px solid var(--line); border-radius:7px; color:var(--ink);
+    font-family:var(--sans); font-size:1rem; padding:0.5rem 0.65rem; color-scheme:dark; min-width:0; max-width:100%;
+  }
+  .event-form input[type=text]{ flex:1 1 11rem; }
+  .event-form input:focus-visible{ outline:2px solid var(--teal); outline-offset:2px; }
+  .event-msg{ min-height:1.2em; margin:0.6rem 0 0; font-size:0.78rem; color:var(--gold); text-align:center; }
+  .event-list{ list-style:none; margin:0.6rem 0 0; padding:0; display:flex; flex-direction:column; gap:0.5rem; }
+  .event-item{ display:flex; align-items:center; gap:0.8rem; border:1px solid var(--line); border-radius:10px; padding:0.55rem 0.8rem; }
+  .event-item .ev-name{ flex:1 1 auto; min-width:0; overflow-wrap:anywhere; color:var(--ink); }
+  .event-item .ev-name small{ display:block; color:var(--ink-dim); font-size:0.75rem; }
+  .event-item .ev-left{ font-family:var(--serif); font-variant-numeric:tabular-nums; color:var(--gold); font-size:1.05rem; white-space:nowrap; }
+  .event-item.past .ev-left{ color:var(--ink-dim); font-size:0.85rem; }
+  .event-item button{ min-width:2rem; min-height:2rem; padding:0 0.5rem; }
 </style>
 </head>
 <body>
@@ -579,6 +598,22 @@
       <p class="editor-warn" id="editorWarn" role="status"></p>
       <p class="editor-note">modificările se salvează automat, doar în acest browser. Programul „weekend” se aplică și în sărbătorile legale, dacă opțiunea de deasupra este bifată. Un interval cu început = sfârșit este ignorat; intervalele care trec de miezul nopții (ex. 23:00–07:00) sunt permise.</p>
     </div>
+  </section>
+
+  <hr class="divider">
+
+  <section class="events-section" aria-label="Evenimente">
+    <h2>evenimente</h2>
+    <form class="event-form" id="eventForm" autocomplete="off">
+      <label for="eventName" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);">Numele evenimentului</label>
+      <input type="text" id="eventName" maxlength="40" placeholder="ex: concediu, examen, ziua mea">
+      <label for="eventWhen" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);">Data și ora evenimentului</label>
+      <input type="datetime-local" id="eventWhen">
+      <button type="submit" id="eventAddBtn">adaugă</button>
+    </form>
+    <p class="event-msg" id="eventMsg" role="status"></p>
+    <ul class="event-list" id="eventList"></ul>
+    <p class="alarm-note" id="eventNote">Până la 6 evenimente, păstrate doar în acest browser. „z” = zile de 24 de ore, exact ca la numărătoarea săptămânii; ora este cea locală a dispozitivului.</p>
   </section>
 
   <hr class="divider">
@@ -1325,6 +1360,67 @@
     dayBarNowEl.style.left = (Math.min(1, Math.max(0, dFrac))*100) + '%';
   }
 
+  // ---- evenimente: numărători inverse către o dată și o oră alese (doar local) ----
+  var EVENTS_KEY = 'clepsidra.events';
+  var events = [];
+  var eventListEl = document.getElementById('eventList');
+  var eventMsgEl = document.getElementById('eventMsg');
+  function loadEvents(){
+    events = [];
+    try{
+      var arr = JSON.parse(localStorage.getItem(EVENTS_KEY) || '[]');
+      if(Array.isArray(arr)) arr.slice(0, 6).forEach(function(e){
+        if(e && typeof e.name === 'string' && typeof e.ts === 'number' && isFinite(e.ts) && e.ts > 0 && e.ts < 8.64e15)
+          events.push({ name: e.name.slice(0, 40), ts: e.ts });
+      });
+    }catch(err){}
+    events.sort(function(a,b){ return a.ts - b.ts; });
+  }
+  function saveEvents(){ try{ localStorage.setItem(EVENTS_KEY, JSON.stringify(events)); }catch(e){} }
+  function fmtLeft(ms){
+    var sec = Math.floor(Math.abs(ms)/1000), d = Math.floor(sec/86400), h = Math.floor((sec%86400)/3600), m = Math.floor((sec%3600)/60), s = sec%60;
+    return (d ? d + 'z ' : '') + pad(h) + ':' + pad(m) + ':' + pad(s);
+  }
+  function renderEvents(){
+    eventListEl.innerHTML = '';
+    events.forEach(function(ev, i){
+      var li = document.createElement('li'); li.className = 'event-item';
+      var nm = document.createElement('span'); nm.className = 'ev-name'; nm.textContent = ev.name;
+      var sm = document.createElement('small'); sm.textContent = formatDate(new Date(ev.ts)) + ', ' + pad(new Date(ev.ts).getHours()) + ':' + pad(new Date(ev.ts).getMinutes());
+      nm.appendChild(sm);
+      var left = document.createElement('span'); left.className = 'ev-left'; left.setAttribute('data-ts', String(ev.ts));
+      var rm = document.createElement('button'); rm.type = 'button'; rm.textContent = '×';
+      rm.setAttribute('aria-label', 'Șterge evenimentul ' + ev.name);
+      rm.addEventListener('click', function(){ events.splice(i, 1); saveEvents(); renderEvents(); eventMsgEl.textContent = 'Eveniment șters.'; });
+      li.appendChild(nm); li.appendChild(left); li.appendChild(rm);
+      eventListEl.appendChild(li);
+    });
+    updateEvents(Date.now());
+  }
+  function updateEvents(nowMs){
+    Array.prototype.forEach.call(eventListEl.children, function(li){
+      var l = li.querySelector('.ev-left'), diff = Number(l.getAttribute('data-ts')) - nowMs;
+      li.classList.toggle('past', diff <= 0);
+      l.textContent = diff > 0 ? fmtLeft(diff) : 'a trecut de ' + fmtLeft(diff);
+    });
+  }
+  document.getElementById('eventForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var name = document.getElementById('eventName').value.trim();
+    var when = document.getElementById('eventWhen').value;
+    var m = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/.exec(when);
+    if(!name){ eventMsgEl.textContent = 'Scrie numele evenimentului.'; document.getElementById('eventName').focus(); return; }
+    if(!m){ eventMsgEl.textContent = 'Alege data și ora evenimentului.'; document.getElementById('eventWhen').focus(); return; }
+    if(events.length >= 6){ eventMsgEl.textContent = 'Maximum 6 evenimente; șterge unul pentru a adăuga altul.'; return; }
+    var ts = new Date(+m[1], +m[2]-1, +m[3], +m[4], +m[5]).getTime();
+    if(!isFinite(ts)){ eventMsgEl.textContent = 'Data nu este validă.'; return; }
+    events.push({ name: name.slice(0, 40), ts: ts });
+    events.sort(function(a,b){ return a.ts - b.ts; });
+    saveEvents(); renderEvents();
+    document.getElementById('eventName').value = ''; document.getElementById('eventWhen').value = '';
+    eventMsgEl.textContent = ts > Date.now() ? 'Eveniment adăugat.' : 'Eveniment adăugat (data este în trecut).';
+  });
+
   function tick(){
     var now = new Date();
 
@@ -1361,8 +1457,10 @@
     if(alarmFiring && Date.now() - lastBeepAt >= 4000){ lastBeepAt = Date.now(); beep(); }
 
     updateExtras(now);
+    updateEvents(now.getTime());
   }
 
+  loadEvents(); renderEvents();
   loadSchedule();
   loadAlarmState();
   // la revenirea în filă (după fundal/blocare) actualizează imediat și verifică alarma
