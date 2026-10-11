@@ -16,7 +16,7 @@ Un singur fișier HTML, fără dependențe externe, în limba română. Arată c
 
 Verificate în cod și în teste automate (Chromium headless, ceas simulat, fus orar Europe/Bucharest):
 - Numărătoare inversă până la următoarea miezul nopții, calculată pe calendarul local: în zilele cu schimbarea orei zilele durează 23 sau 25 de ore și numărătoarea o reflectă.
-- Numărătoare până la sfârșitul săptămânii de lucru (sâmbătă 00:00) sau al weekendului (luni 00:00). Weekendul este fix sâmbătă–duminică; sărbătorile legale nu sunt luate în calcul.
+- Numărătoare până la sfârșitul săptămânii de lucru (sâmbătă 00:00) sau al weekendului (luni 00:00). Weekendul este fix sâmbătă–duminică; zilele de sărbătoare legală din România sunt tratate ca zile libere (bifa „sărbători legale”, activă implicit, se poate opri), cu afișarea următoarei sărbători și a numelui ei.
 - Program separat pentru zile lucrătoare și weekend, cu șase categorii (somn, deplasare, serviciu, mese, timp liber, altele), bară a zilei, „acum” și timpul rămas pe categorii; editor de intervale (inclusiv peste miezul nopții). Editorul avertizează la intervale suprapuse; un interval cu început = sfârșit este ignorat.
 - Alarmă la o oră aleasă, cu opțiunea „repetă zilnic”, sunet repetat până la „oprește”, flash vizual și notificare de browser (dacă o permiți).
 
@@ -30,7 +30,7 @@ Verificate în cod și în teste automate (Chromium headless, ceas simulat, fus 
 ## Confidențialitate și rețea
 
 - Nu se face nicio cerere de rețea; fișierul nu încarcă resurse externe (are și o politică CSP restrictivă) și nu are telemetrie.
-- Stocare locală (`localStorage`): `clepsidra.schedule` (programele) și `clepsidra.alarm` (ora alarmei, repetare, activă). Datele din stocare sunt validate la încărcare; dacă stocarea e blocată, aplicația merge, dar nu păstrează setările.
+- Stocare locală (`localStorage`): `clepsidra.schedule` (programele) și `clepsidra.alarm` (ora alarmei, repetare, activă) și `clepsidra.holidays` (bifa sărbători legale). Datele din stocare sunt validate la încărcare; dacă stocarea e blocată, aplicația merge, dar nu păstrează setările.
 - Permisiuni: notificări (cerute doar la clicul pe „activează”) și sunet.
 
 ## Limite și avertismente
@@ -38,6 +38,7 @@ Verificate în cod și în teste automate (Chromium headless, ceas simulat, fus 
 - **Alarma funcționează doar cât pagina rămâne deschisă și activă.** Cu fila în fundal browserele încetinesc temporizatoarele, pe telefon cu ecranul blocat sau cu pagina închisă alarma poate suna cu întârziere sau deloc (aplicația spune acest lucru și în interfață; dacă prinde alarma târziu, afișează „cu N min în urmă”). Nu o folosi ca unică alarmă pentru lucruri importante.
 - Dacă pagina a fost închisă în momentul alarmei, alarma nu sună la redeschidere; se reprogramează pentru următoarea apariție a orei.
 - Pe iOS/Safari sunetul este permis doar după un gest al utilizatorului: de aceea sunetul se activează la apăsarea „activează”. Nu am putut testa pe dispozitive iOS reale.
+- Lista sărbătorilor urmează legislația la data verificării și poate deveni perimată dacă legea se schimbă; zilele libere ale altor culte sau cele acordate prin decizii punctuale (punți) nu sunt incluse.
 - Programul implicit este un exemplu; schimbă-l după nevoie. Zilele cu schimbare de oră au bara de zi scalată la durata reală (23/25 h), dar etichetele 00–24 rămân fixe.
 
 ## Rulare locală / offline
@@ -48,7 +49,7 @@ Descarcă `index.html` și deschide-l în browser; funcționează complet fără
 
 ### 11 octombrie 2026
 - Verificare la 11 octombrie 2026: axe 0 violări, fără erori în consolă, fără depășire orizontală la 360 px; numărătorile se calculează dinamic din ceasul local (inclusiv schimbarea orei din 25 octombrie 2026), deci nu conțin date fixe perimate.
-- Limita declarată (sărbătorile legale nu sunt luate în calcul) rămâne neschimbată.
+- Nou: sărbătorile legale ale României (listă verificată la 11 octombrie 2026 în Codul muncii art. 139 și într-o listă 2026; Paștele ortodox calculat prin algoritmul Meeus, +13 zile) contează ca zile libere în numărătoarea săptămânii; bifă de oprire, linie „următoarea sărbătoare”. Captura de ecran actualizată.
 
 ## Licență
 

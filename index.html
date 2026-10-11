@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-DxI2LJ3iTG5OwdGYT+dT/mMLh3yn95MgCQ9TKmCUKuk='; style-src 'unsafe-inline'; img-src data:; base-uri 'none'; form-action 'none'; object-src 'none'">
 <meta property="og:title" content="Clepsidra — ceas invers">
 <meta property="og:description" content="Timpul rămas din zi și din săptămână, alarmă și programe pentru zile lucrătoare și weekend. Local, fără telemetrie.">
 <meta property="og:type" content="website">
@@ -183,6 +183,8 @@
     background: transparent;
   }
   .now-activity strong{ color:var(--ink); font-weight:600; }
+  .holiday-toggle{ margin:0.2rem 0 0.4rem; }
+  .holiday-line{ margin:0 0 1rem; font-size:0.82rem; color: var(--ink-dim); min-height:1.1em; }
   .now-activity-time{
     margin:0 0 1.3rem;
     font-size:0.82rem;
@@ -539,7 +541,13 @@
   <section class="schedule-section" aria-label="Programul zilei">
     <h2 id="scheduleHeading">programul zilei</h2>
 
-    <p class="now-activity" id="nowActivity"><span class="now-dot" id="nowDot"></span>Acum: <strong id="nowActivityLabel">—</strong></p>
+    <label class="repeat-toggle holiday-toggle">
+ <input type="checkbox" id="holidayToggle" checked>
+ <span>sărbătorile legale din România = zi liberă (program de weekend)</span>
+ </label>
+ <p class="holiday-line" id="holidayLine" role="status"></p>
+
+ <p class="now-activity" id="nowActivity"><span class="now-dot" id="nowDot"></span>Acum: <strong id="nowActivityLabel">—</strong></p>
     <p class="now-activity-time" id="nowActivityTime"></p>
 
     <div class="day-bar-wrap">
@@ -569,7 +577,7 @@
       <div class="editor-rows" id="editorRows"></div>
       <button type="button" class="add-block-btn" id="addBlockBtn">+ adaugă interval</button>
       <p class="editor-warn" id="editorWarn" role="status"></p>
-      <p class="editor-note">modificările se salvează automat, doar în acest browser. Un interval cu început = sfârșit este ignorat; intervalele care trec de miezul nopții (ex. 23:00–07:00) sunt permise.</p>
+      <p class="editor-note">modificările se salvează automat, doar în acest browser. Programul „weekend” se aplică și în sărbătorile legale, dacă opțiunea de deasupra este bifată. Un interval cu început = sfârșit este ignorat; intervalele care trec de miezul nopții (ex. 23:00–07:00) sunt permise.</p>
     </div>
   </section>
 
@@ -900,9 +908,44 @@
     return parts[0]*60+parts[1];
   }
 
+
+  // ---- Sărbători legale (Codul muncii, art. 139): zile nelucrătoare. Paștele ortodox: algoritmul Meeus (calendar iulian, +13 zile, valabil 1900–2099). ----
+  var HOLIDAYS_KEY = 'clepsidra.holidays';
+  var holidaysEnabled = true;
+  try{ if(localStorage.getItem(HOLIDAYS_KEY) === '0') holidaysEnabled = false; }catch(e){}
+  var FIXED_HOLIDAYS = {
+    '1-1':'Anul Nou','1-2':'A doua zi de Anul Nou','1-6':'Boboteaza','1-7':'Sf. Ioan Botezătorul','1-24':'Ziua Unirii Principatelor Române',
+    '5-1':'Ziua Muncii','6-1':'Ziua Copilului','8-15':'Adormirea Maicii Domnului','11-30':'Sf. Apostol Andrei','12-1':'Ziua Națională a României',
+    '12-25':'Crăciunul','12-26':'A doua zi de Crăciun'
+  };
+  var holidayCache = {};
+  function orthodoxEaster(y){
+    var a = y % 4, b = y % 7, c = y % 19, d = (19*c + 15) % 30, e = (2*a + 4*b - d + 34) % 7;
+    var m = Math.floor((d + e + 114) / 31), dd = ((d + e + 114) % 31) + 1;
+    return new Date(y, m - 1, dd + 13); // dată iuliană + 13 zile
+  }
+  function holidaysOfYear(y){
+    if(holidayCache[y]) return holidayCache[y];
+    var map = {}, k;
+    for(k in FIXED_HOLIDAYS){ if(Object.prototype.hasOwnProperty.call(FIXED_HOLIDAYS,k)) map[k] = FIXED_HOLIDAYS[k]; }
+    var easter = orthodoxEaster(y);
+    function add(offset, name){
+      var d = new Date(easter.getFullYear(), easter.getMonth(), easter.getDate() + offset);
+      var key = (d.getMonth()+1) + '-' + d.getDate();
+      map[key] = map[key] ? map[key] + ' · ' + name : name;
+    }
+    add(-2, 'Vinerea Mare'); add(0, 'Paștele ortodox'); add(1, 'A doua zi de Paște'); add(49, 'Rusaliile'); add(50, 'A doua zi de Rusalii');
+    holidayCache[y] = map;
+    return map;
+  }
+  function holidayName(d){
+    return holidaysOfYear(d.getFullYear())[(d.getMonth()+1) + '-' + d.getDate()] || '';
+  }
+  function isHoliday(d){ return holidaysEnabled && !!holidayName(d); }
+
   function isWeekendDate(d){
     var day = d.getDay();
-    return (day === 0 || day === 6);
+    return (day === 0 || day === 6) || isHoliday(d);
   }
   function templateForDate(d){
     return isWeekendDate(d) ? weekendBlocks : weekdayBlocks;
@@ -961,19 +1004,15 @@
   }
 
   function getWeekCountdownInfo(now){
-    var day = now.getDay();
-    var isWknd = (day === 0 || day === 6);
-    var targetDate, label;
-    if(isWknd){
-      label = 'weekend';
-      var daysUntilMonday = (8 - day) % 7;
-      targetDate = new Date(now.getFullYear(), now.getMonth(), now.getDate()+daysUntilMonday, 0,0,0,0);
-    }else{
-      label = 'lucru';
-      var daysUntilSaturday = (6 - day) % 7;
-      targetDate = new Date(now.getFullYear(), now.getMonth(), now.getDate()+daysUntilSaturday, 0,0,0,0);
+    // Numărătoare până la următoarea schimbare dintre zile libere (weekend/sărbători) și zile lucrătoare, pe calendarul local.
+    var nonWorking = isWeekendDate(now), sawHoliday = isHoliday(now), targetDate = null;
+    for(var i = 1; i <= 400; i++){
+      var d = new Date(now.getFullYear(), now.getMonth(), now.getDate() + i, 0,0,0,0);
+      if(isWeekendDate(d) !== nonWorking){ targetDate = d; break; }
+      if(nonWorking && isHoliday(d)) sawHoliday = true;
     }
-    return { label: label, remainingMs: targetDate.getTime() - now.getTime() };
+    if(!targetDate) targetDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0,0,0,0);
+    return { label: nonWorking ? (sawHoliday ? 'libere' : 'weekend') : 'lucru', remainingMs: targetDate.getTime() - now.getTime() };
   }
 
   function loadSchedule(){
@@ -1221,17 +1260,45 @@
 
   var lastDayType = null;
 
+  var holidayToggle = document.getElementById('holidayToggle');
+  var holidayLineEl = document.getElementById('holidayLine');
+  function renderHolidayLine(now){
+    var today = holidayName(now);
+    var text;
+    if(today){
+      text = 'Azi: ' + today + ' — zi liberă legală' + (holidaysEnabled ? '.' : ' (neluată în calcul: opțiunea e debifată).');
+    }else{
+      text = '';
+      for(var i = 1; i <= 400; i++){
+        var d = new Date(now.getFullYear(), now.getMonth(), now.getDate() + i, 0,0,0,0);
+        var nm = holidayName(d);
+        if(nm){ text = 'Următoarea sărbătoare legală: ' + nm + ', ' + formatDate(d) + ' (peste ' + i + (i === 1 ? ' zi)' : ' zile)') + '.'; break; }
+      }
+    }
+    holidayLineEl.textContent = text;
+  }
+  holidayToggle.checked = holidaysEnabled;
+  holidayToggle.addEventListener('change', function(){
+    holidaysEnabled = holidayToggle.checked;
+    try{ localStorage.setItem(HOLIDAYS_KEY, holidaysEnabled ? '1' : '0'); }catch(e){}
+    lastDayType = null;
+    updateExtras(new Date());
+    tick();
+  });
+
   function updateExtras(now){
     var weekInfo = getWeekCountdownInfo(now);
-    weekLabelEl.textContent = weekInfo.label === 'weekend' ? 'rămas din weekend' : 'rămas din săptămâna de lucru';
+    weekLabelEl.textContent = weekInfo.label === 'weekend' ? 'rămas din weekend' : (weekInfo.label === 'libere' ? 'rămas din zilele libere' : 'rămas din săptămâna de lucru');
     weekCountdownEl.textContent = fmtDurDays(weekInfo.remainingMs);
 
     var todayType = templateKeyForDate(now);
-    var dayKey = todayType + '|' + now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate();
+    var dayKey = todayType + '|' + holidaysEnabled + '|' + now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate();
     if(dayKey !== lastDayType){
       lastDayType = dayKey;
-      scheduleHeadingEl.textContent = 'programul zilei (' + (todayType === 'weekend' ? 'weekend' : 'zi lucrătoare') + ')';
+      var wkd = now.getDay() === 0 || now.getDay() === 6;
+      scheduleHeadingEl.textContent = 'programul zilei (' + (todayType === 'weekend' ? (wkd ? 'weekend' : 'sărbătoare legală') : 'zi lucrătoare') + ')';
       renderDayBar(now);
+      renderHolidayLine(now);
     }
 
     var active = currentActiveBlock(now);
