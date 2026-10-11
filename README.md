@@ -4,6 +4,8 @@ Ceas invers: nu timpul scurs, ci timpul rămas din zi și din săptămână, plu
 
 **Live:** https://chiuta.github.io/CLEPSIDRA/
 
+**Ultima actualizare:** 11 octombrie 2026
+
 ![Captura de ecran](screenshot.png)
 
 ## Ce este
@@ -41,6 +43,12 @@ Verificate în cod și în teste automate (Chromium headless, ceas simulat, fus 
 ## Rulare locală / offline
 
 Descarcă `index.html` și deschide-l în browser; funcționează complet fără internet.
+
+## Istoric / Changelog
+
+### 11 octombrie 2026
+- Verificare la 11 octombrie 2026: axe 0 violări, fără erori în consolă, fără depășire orizontală la 360 px; numărătorile se calculează dinamic din ceasul local (inclusiv schimbarea orei din 25 octombrie 2026), deci nu conțin date fixe perimate.
+- Limita declarată (sărbătorile legale nu sunt luate în calcul) rămâne neschimbată.
 
 ## Licență
 
