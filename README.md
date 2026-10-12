@@ -4,7 +4,7 @@ Ceas invers: nu timpul scurs, ci timpul rămas din zi și din săptămână, plu
 
 **Live:** https://chiuta.github.io/CLEPSIDRA/
 
-**Ultima actualizare:** 11 octombrie 2026
+**Versiune:** 1.0.0 · **Ultima actualizare:** 12 octombrie 2026
 
 ![Captura de ecran](screenshot.png)
 
@@ -47,6 +47,9 @@ Verificate în cod și în teste automate (Chromium headless, ceas simulat, fus 
 Descarcă `index.html` și deschide-l în browser; funcționează complet fără internet.
 
 ## Istoric / Changelog
+
+### 12 octombrie 2026 (v1.0.0)
+- 1.0.0 — 2026-10-12: versiunea și data ultimei actualizări sunt afișate în aplicație
 
 ### 11 octombrie 2026 (a doua intrare)
 - Funcție nouă: „evenimente” — numărători inverse către date alese de utilizator, păstrate local (testat: validare, adăugare, sortare, trecut, ștergere, persistență la reîncărcare, limita de 6).
