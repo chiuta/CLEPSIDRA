@@ -4,7 +4,7 @@ Ceas invers: nu timpul scurs, ci timpul rămas din zi și din săptămână, plu
 
 **Live:** https://chiuta.github.io/CLEPSIDRA/
 
-**Versiune:** 1.0.0 · **Ultima actualizare:** 12 octombrie 2026
+**Versiune:** 1.1.0 · **Ultima actualizare:** 14 octombrie 2026
 
 ![Captura de ecran](screenshot.png)
 
@@ -21,6 +21,13 @@ Verificate în cod și în teste automate (Chromium headless, ceas simulat, fus 
 - Evenimente: până la 6 numărători inverse către o dată și o oră alese de tine (nume până la 40 de caractere), sortate cronologic, cu timpul rămas în zile de 24 de ore (`z`) și `HH:MM:SS`; evenimentele trecute rămân afișate cu „a trecut de …” până le ștergi. Validare cu mesaje (nume lipsă, dată lipsă, limită de 6).
 - Alarmă la o oră aleasă, cu opțiunea „repetă zilnic”, sunet repetat până la „oprește”, flash vizual și notificare de browser (dacă o permiți).
 
+## Funcții noi (1.1.0)
+
+- **Export calendar (.ics)** pentru: programul zilei (zile lucrătoare / weekend, repetare săptămânală, orele ca „ore plutitoare”, cu excepții pentru sărbătorile legale ale României pe 12 luni), evenimentele tale (cu memento cu 15 minute înainte) și alarma (repetare zilnică dacă „repetă zilnic” este bifat). Fișierele au fost verificate cu biblioteca Python `icalendar` și cu un calcul independent al Paștelui ortodox.
+- **Tipărire / PDF a programului**: butonul de tipărire pregătește o foaie cu cele două programe (zile lucrătoare și weekend) și lista evenimentelor; restul paginii nu se tipărește.
+- Copie de siguranță `.fff.json` (modul comun „fff-kit”, local, fără rețea): se deschide din dialogul care apare la clic pe versiunea din subsol (export, export criptat cu parolă, import cu confirmare, ștergerea datelor aplicației). Copia cuprinde cheile `clepsidra.*`.
+- Interfața este numai în română; nu există traduceri noi de verificat.
+
 ## Manual de utilizare
 
 1. Deschide pagina; ceasul pornește singur.
@@ -32,6 +39,7 @@ Verificate în cod și în teste automate (Chromium headless, ceas simulat, fus 
 
 - Nu se face nicio cerere de rețea; fișierul nu încarcă resurse externe (are și o politică CSP restrictivă) și nu are telemetrie.
 - Stocare locală (`localStorage`): `clepsidra.schedule` (programele) și `clepsidra.alarm` (ora alarmei, repetare, activă) și `clepsidra.holidays` (bifa sărbători legale) și `clepsidra.events` (evenimentele). Datele din stocare sunt validate la încărcare; dacă stocarea e blocată, aplicația merge, dar nu păstrează setările.
+- Exporturile `.ics` și copia `.fff.json` se generează în browser și se descarcă doar la apăsarea butoanelor; nu conțin date în afara celor de mai sus.
 - Permisiuni: notificări (cerute doar la clicul pe „activează”) și sunet.
 
 ## Limite și avertismente
@@ -47,6 +55,10 @@ Verificate în cod și în teste automate (Chromium headless, ceas simulat, fus 
 Descarcă `index.html` și deschide-l în browser; funcționează complet fără internet.
 
 ## Istoric / Changelog
+
+### 14 octombrie 2026 (v1.1.0)
+- Export `.ics` (program, evenimente, alarmă), foaie de tipărire / PDF a programului.
+- Copie `.fff.json` prin modulele comune (core, label, bundle); teste noi: `tests/fff-r8.test.mjs` și `tests/ics_check.py` (verificare independentă; necesită pachetul Python `icalendar`).
 
 ### 12 octombrie 2026 (v1.0.0)
 - 1.0.0 — 2026-10-12: versiunea și data ultimei actualizări sunt afișate în aplicație
