@@ -15,8 +15,8 @@
     "clepsidra.alarm",
     "clepsidra.schedule"
   ],
-  "sizeBytes": 156482,
-  "sha256": "e28766cdcdb41e32fd49e46bdce1c71e811ee6a8244f6fbcf6f1b8923376977c",
+  "sizeBytes": 158103,
+  "sha256": "74b0abeaa9f81b0d8e96ac8814cffccc298c8d76bde513d9aa2953b7d7aa2492",
   "csp": {
     "present": true,
     "directives": {
