@@ -72,7 +72,7 @@ Descarcă `index.html` și deschide-l în browser; funcționează complet fără
 
 ## Licență
 
-Licența nu este încă declarată.
+Licență MIT — vezi fișierul `LICENSE`.
 
 ## Autor
 
