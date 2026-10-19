@@ -10,7 +10,7 @@ Fordított óra: nem az eltelt időt, hanem a nap és a hét hátralévő idejé
 
 **Élő változat:** https://chiuta.github.io/CLEPSIDRA/
 
-![Képernyőkép](screenshot.png)
+![Képernyőkép](screenshot.hu.png)
 
 ## Mi ez
 

@@ -10,7 +10,7 @@ Reloj inverso: no el tiempo transcurrido, sino el tiempo que queda del día y de
 
 **En línea:** https://chiuta.github.io/CLEPSIDRA/
 
-![Captura de pantalla](screenshot.png)
+![Captura de pantalla](screenshot.es.png)
 
 ## Qué es
 

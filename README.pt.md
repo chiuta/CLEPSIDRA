@@ -10,7 +10,7 @@ Relógio inverso: não o tempo decorrido, mas o tempo que resta do dia e da sema
 
 **Online:** https://chiuta.github.io/CLEPSIDRA/
 
-![Captura de ecrã](screenshot.png)
+![Captura de ecrã](screenshot.pt.png)
 
 ## O que é
 

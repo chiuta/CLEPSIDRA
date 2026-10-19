@@ -10,7 +10,7 @@ Orologio inverso: non il tempo trascorso, ma il tempo rimanente della giornata e
 
 **Online:** https://chiuta.github.io/CLEPSIDRA/
 
-![Schermata](screenshot.png)
+![Schermata](screenshot.it.png)
 
 ## Che cos'è
 

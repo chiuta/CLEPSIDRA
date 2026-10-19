@@ -10,7 +10,7 @@ Ceas invers: nu timpul scurs, ci timpul rămas din zi și din săptămână, plu
 
 **Live:** https://chiuta.github.io/CLEPSIDRA/
 
-![Captura de ecran](screenshot.png)
+![Captura de ecran](screenshot.ro.png)
 
 ## Ce este
 

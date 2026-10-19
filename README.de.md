@@ -10,7 +10,7 @@ Umgekehrte Uhr: nicht die vergangene Zeit, sondern die verbleibende Zeit des Tag
 
 **Online:** https://chiuta.github.io/CLEPSIDRA/
 
-![Screenshot](screenshot.png)
+![Screenshot](screenshot.de.png)
 
 ## Was es ist
 

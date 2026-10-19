@@ -10,7 +10,7 @@ Reverse clock: not the time elapsed, but the time remaining in the day and in th
 
 **Live:** https://chiuta.github.io/CLEPSIDRA/
 
-![Screenshot](screenshot.png)
+![Screenshot](screenshot.en.png)
 
 ## What it is
 

@@ -10,7 +10,7 @@ Horloge inversée : non pas le temps écoulé, mais le temps restant dans la jou
 
 **En ligne :** https://chiuta.github.io/CLEPSIDRA/
 
-![Capture d'écran](screenshot.png)
+![Capture d'écran](screenshot.fr.png)
 
 ## De quoi s'agit-il
 
