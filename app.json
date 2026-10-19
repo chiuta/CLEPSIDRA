@@ -13,10 +13,12 @@
   ],
   "storageKeys": [
     "clepsidra.alarm",
+    "clepsidra.events",
+    "clepsidra.holidays",
     "clepsidra.schedule"
   ],
-  "sizeBytes": 158103,
-  "sha256": "74b0abeaa9f81b0d8e96ac8814cffccc298c8d76bde513d9aa2953b7d7aa2492",
+  "sizeBytes": 158779,
+  "sha256": "392aeb058bc0f48ad3325badbb1ad40350bdff5c3b463e7665f3c84e160e771a",
   "csp": {
     "present": true,
     "directives": {
@@ -48,7 +50,7 @@
     ]
   },
   "kit": {
-    "version": "1.0.0",
+    "version": "1.1.1",
     "modules": [
       "core",
       "label",
