@@ -82,6 +82,6 @@ Licență MIT — vezi fișierul `LICENSE`.
 
 Alexio — Alexandru-Ionuț Chiuță, contact: alexio@trom.tf
 
-## English summary
+## Rezumat
 
-CLEPSIDRA is a single-file "reverse clock" with an 8-language interface: time remaining in the day and in the work week/weekend, a day schedule with separate weekday and weekend templates, and an alarm. DST days (23/25 h) are handled via calendar midnight. No network requests, no telemetry; settings are kept in localStorage and validated on load. The alarm only works while the page is open and active (it is honest about this in the UI). License not yet declared.
+CLEPSIDRA este un „ceas invers” într-un singur fișier, cu interfață în 8 limbi: timpul rămas din zi și din săptămâna de lucru/weekend, un program zilnic cu șabloane separate pentru zilele lucrătoare și weekend, și o alarmă. Zilele cu schimbarea orei (23/25 h) sunt tratate prin miezul nopții calendaristic. Fără cereri de rețea, fără telemetrie; setările se păstrează în localStorage și sunt validate la încărcare. Alarma funcționează doar cât pagina este deschisă și activă (interfața spune acest lucru deschis). Licență nedeclarată încă.
