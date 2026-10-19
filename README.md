@@ -1,83 +1,85 @@
 # CLEPSIDRA
 
-Ceas invers: nu timpul scurs, ci timpul rămas din zi și din săptămână, plus alarmă și programe pentru zile lucrătoare și weekend.
+**English** · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
+
+**Version:** 1.1.0 · **Last updated:** 2026-10-14
+
+Reverse clock: not the time elapsed, but the time remaining in the day and in the week, plus an alarm and schedules for working days and weekends.
 
 **Live:** https://chiuta.github.io/CLEPSIDRA/
 
-**Versiune:** 1.1.0 · **Ultima actualizare:** 14 octombrie 2026
+![Screenshot](screenshot.png)
 
-![Captura de ecran](screenshot.png)
+## What it is
 
-## Ce este
+A single HTML file with no external dependencies, in Romanian. It shows how much is left until midnight, how much is left of the working week (or of the weekend), what activity is taking place "now" according to your schedule, and how many hours are left today in each category. It starts "from a thought in the book Nemurirea, about the biological clock".
 
-Un singur fișier HTML, fără dependențe externe, în limba română. Arată cât a mai rămas până la miezul nopții, cât a mai rămas din săptămâna de lucru (sau din weekend), ce activitate are loc „acum” după programul tău și câte ore au mai rămas azi din fiecare categorie. Pornește „de la un gând din cartea Nemurirea, despre ceasul biologic”.
+## Features
 
-## Funcții
+Verified in the code and in automated tests (headless Chromium, simulated clock, Europe/Bucharest time zone):
+- Countdown to the next midnight, computed on the local calendar: on days with a clock change the days last 23 or 25 hours and the countdown reflects it.
+- Countdown to the end of the working week (Saturday 00:00) or of the weekend (Monday 00:00). The weekend is fixed as Saturday–Sunday; public holidays in Romania are treated as days off ("public holidays" checkbox, on by default, can be turned off), with the next holiday and its name displayed.
+- Separate schedules for working days and weekends, with six categories (sleep, commuting, work, meals, free time, other), a day bar, "now" and the time remaining per category; an interval editor (including across midnight). The editor warns about overlapping intervals; an interval with start = end is ignored.
+- Events: up to 6 countdowns to a date and time of your choice (name up to 40 characters), sorted chronologically, with the time remaining in 24-hour days (`z`) and `HH:MM:SS`; past events stay displayed with "passed … ago" until you delete them. Validation with messages (missing name, missing date, limit of 6).
+- Alarm at a chosen time, with a "repeat daily" option, a sound repeated until "stop", a visual flash and a browser notification (if you allow it).
 
-Verificate în cod și în teste automate (Chromium headless, ceas simulat, fus orar Europe/Bucharest):
-- Numărătoare inversă până la următoarea miezul nopții, calculată pe calendarul local: în zilele cu schimbarea orei zilele durează 23 sau 25 de ore și numărătoarea o reflectă.
-- Numărătoare până la sfârșitul săptămânii de lucru (sâmbătă 00:00) sau al weekendului (luni 00:00). Weekendul este fix sâmbătă–duminică; zilele de sărbătoare legală din România sunt tratate ca zile libere (bifa „sărbători legale”, activă implicit, se poate opri), cu afișarea următoarei sărbători și a numelui ei.
-- Program separat pentru zile lucrătoare și weekend, cu șase categorii (somn, deplasare, serviciu, mese, timp liber, altele), bară a zilei, „acum” și timpul rămas pe categorii; editor de intervale (inclusiv peste miezul nopții). Editorul avertizează la intervale suprapuse; un interval cu început = sfârșit este ignorat.
-- Evenimente: până la 6 numărători inverse către o dată și o oră alese de tine (nume până la 40 de caractere), sortate cronologic, cu timpul rămas în zile de 24 de ore (`z`) și `HH:MM:SS`; evenimentele trecute rămân afișate cu „a trecut de …” până le ștergi. Validare cu mesaje (nume lipsă, dată lipsă, limită de 6).
-- Alarmă la o oră aleasă, cu opțiunea „repetă zilnic”, sunet repetat până la „oprește”, flash vizual și notificare de browser (dacă o permiți).
+## New features (1.1.0)
 
-## Funcții noi (1.1.0)
+- **Calendar export (.ics)** for: the day schedule (working days / weekend, weekly repetition, hours as "floating hours", with exceptions for Romania's public holidays over 12 months), your events (with a reminder 15 minutes before) and the alarm (daily repetition if "repeat daily" is ticked). The files were checked with the Python library `icalendar` and with an independent calculation of Orthodox Easter.
+- **Print / PDF of the schedule**: the print button prepares a sheet with the two schedules (working days and weekend) and the list of events; the rest of the page is not printed.
+- `.fff.json` backup (shared "fff-kit" mode, local, no network): opened from the dialog that appears when you click the version in the footer (export, password-encrypted export, import with confirmation, deletion of the app data). The backup covers the `clepsidra.*` keys.
+- The interface is in Romanian only; there are no new translations to check.
 
-- **Export calendar (.ics)** pentru: programul zilei (zile lucrătoare / weekend, repetare săptămânală, orele ca „ore plutitoare”, cu excepții pentru sărbătorile legale ale României pe 12 luni), evenimentele tale (cu memento cu 15 minute înainte) și alarma (repetare zilnică dacă „repetă zilnic” este bifat). Fișierele au fost verificate cu biblioteca Python `icalendar` și cu un calcul independent al Paștelui ortodox.
-- **Tipărire / PDF a programului**: butonul de tipărire pregătește o foaie cu cele două programe (zile lucrătoare și weekend) și lista evenimentelor; restul paginii nu se tipărește.
-- Copie de siguranță `.fff.json` (modul comun „fff-kit”, local, fără rețea): se deschide din dialogul care apare la clic pe versiunea din subsol (export, export criptat cu parolă, import cu confirmare, ștergerea datelor aplicației). Copia cuprinde cheile `clepsidra.*`.
-- Interfața este numai în română; nu există traduceri noi de verificat.
+## User guide
 
-## Manual de utilizare
+1. Open the page; the clock starts by itself.
+2. For the schedule: press "edit schedule", choose the "working days" or "weekend" tab, change the hours and categories or add/delete intervals. Changes are saved automatically in the browser.
+3. For the alarm: choose the time, tick or untick "repeat daily" and press "activate" (on this click the browser may ask for permission for notifications and enables the sound).
+4. When the alarm rings, press "stop".
 
-1. Deschide pagina; ceasul pornește singur.
-2. Pentru program: apasă „editează programul”, alege fila „zile lucrătoare” sau „weekend”, modifică orele și categoriile sau adaugă/șterge intervale. Modificările se salvează automat în browser.
-3. Pentru alarmă: alege ora, bifează sau nu „repetă zilnic” și apasă „activează” (la acest clic browserul poate cere permisiunea pentru notificări și activează sunetul).
-4. Când alarma sună, apasă „oprește”.
+## Privacy and network
 
-## Confidențialitate și rețea
+- No network request is made; the file loads no external resources (it also has a restrictive CSP policy) and has no telemetry.
+- Local storage (`localStorage`): `clepsidra.schedule` (the schedules) and `clepsidra.alarm` (alarm time, repeat, active) and `clepsidra.holidays` (the public holidays checkbox) and `clepsidra.events` (the events). The data in storage is validated on load; if storage is blocked, the app works but does not keep the settings.
+- The `.ics` exports and the `.fff.json` backup are generated in the browser and downloaded only when you press the buttons; they contain no data beyond the above.
+- Permissions: notifications (requested only when you click "activate") and sound.
 
-- Nu se face nicio cerere de rețea; fișierul nu încarcă resurse externe (are și o politică CSP restrictivă) și nu are telemetrie.
-- Stocare locală (`localStorage`): `clepsidra.schedule` (programele) și `clepsidra.alarm` (ora alarmei, repetare, activă) și `clepsidra.holidays` (bifa sărbători legale) și `clepsidra.events` (evenimentele). Datele din stocare sunt validate la încărcare; dacă stocarea e blocată, aplicația merge, dar nu păstrează setările.
-- Exporturile `.ics` și copia `.fff.json` se generează în browser și se descarcă doar la apăsarea butoanelor; nu conțin date în afara celor de mai sus.
-- Permisiuni: notificări (cerute doar la clicul pe „activează”) și sunet.
+## Limits and warnings
 
-## Limite și avertismente
+- **The alarm works only while the page stays open and active.** With the tab in the background browsers slow down timers; on a phone with the screen locked or with the page closed the alarm may ring late or not at all (the app says this in the interface too; if it catches the alarm late, it displays "N min ago"). Do not use it as your only alarm for important things.
+- If the page was closed at the time of the alarm, the alarm does not ring on reopening; it is rescheduled for the next occurrence of the time.
+- On iOS/Safari sound is allowed only after a user gesture: this is why the sound is enabled when you press "activate". I could not test on real iOS devices.
+- The list of holidays follows the legislation at the date of checking and may become outdated if the law changes; days off of other denominations or those granted by one-off decisions (bridge days) are not included.
+- The default schedule is an example; change it as needed. Days with a clock change have the day bar scaled to the actual duration (23/25 h), but the 00–24 labels remain fixed.
 
-- **Alarma funcționează doar cât pagina rămâne deschisă și activă.** Cu fila în fundal browserele încetinesc temporizatoarele, pe telefon cu ecranul blocat sau cu pagina închisă alarma poate suna cu întârziere sau deloc (aplicația spune acest lucru și în interfață; dacă prinde alarma târziu, afișează „cu N min în urmă”). Nu o folosi ca unică alarmă pentru lucruri importante.
-- Dacă pagina a fost închisă în momentul alarmei, alarma nu sună la redeschidere; se reprogramează pentru următoarea apariție a orei.
-- Pe iOS/Safari sunetul este permis doar după un gest al utilizatorului: de aceea sunetul se activează la apăsarea „activează”. Nu am putut testa pe dispozitive iOS reale.
-- Lista sărbătorilor urmează legislația la data verificării și poate deveni perimată dacă legea se schimbă; zilele libere ale altor culte sau cele acordate prin decizii punctuale (punți) nu sunt incluse.
-- Programul implicit este un exemplu; schimbă-l după nevoie. Zilele cu schimbare de oră au bara de zi scalată la durata reală (23/25 h), dar etichetele 00–24 rămân fixe.
+## Running locally / offline
 
-## Rulare locală / offline
+Download `index.html` and open it in a browser; it works completely without internet.
 
-Descarcă `index.html` și deschide-l în browser; funcționează complet fără internet.
+## History / Changelog
 
-## Istoric / Changelog
+### 14 October 2026 (v1.1.0)
+- `.ics` export (schedule, events, alarm), print / PDF sheet of the schedule.
+- `.fff.json` backup through the shared modules (core, label, bundle); new tests: `tests/fff-r8.test.mjs` and `tests/ics_check.py` (independent check; requires the Python package `icalendar`).
 
-### 14 octombrie 2026 (v1.1.0)
-- Export `.ics` (program, evenimente, alarmă), foaie de tipărire / PDF a programului.
-- Copie `.fff.json` prin modulele comune (core, label, bundle); teste noi: `tests/fff-r8.test.mjs` și `tests/ics_check.py` (verificare independentă; necesită pachetul Python `icalendar`).
+### 12 October 2026 (v1.0.0)
+- 1.0.0 — 2026-10-12: the version and the date of the last update are shown in the app
 
-### 12 octombrie 2026 (v1.0.0)
-- 1.0.0 — 2026-10-12: versiunea și data ultimei actualizări sunt afișate în aplicație
+### 11 October 2026 (second entry)
+- New feature: "events" — countdowns to dates chosen by the user, kept locally (tested: validation, adding, sorting, past, deletion, persistence on reload, limit of 6).
 
-### 11 octombrie 2026 (a doua intrare)
-- Funcție nouă: „evenimente” — numărători inverse către date alese de utilizator, păstrate local (testat: validare, adăugare, sortare, trecut, ștergere, persistență la reîncărcare, limita de 6).
+### 11 October 2026
+- Check on 11 October 2026: axe 0 violations, no console errors, no horizontal overflow at 360 px; the countdowns are computed dynamically from the local clock (including the clock change of 25 October 2026), so they contain no outdated fixed dates.
+- New: Romania's public holidays (list checked on 11 October 2026 in the Labour Code art. 139 and in a 2026 list; Orthodox Easter computed with the Meeus algorithm, +13 days) count as days off in the week countdown; stop checkbox, "next holiday" line. Screenshot updated.
 
-### 11 octombrie 2026
-- Verificare la 11 octombrie 2026: axe 0 violări, fără erori în consolă, fără depășire orizontală la 360 px; numărătorile se calculează dinamic din ceasul local (inclusiv schimbarea orei din 25 octombrie 2026), deci nu conțin date fixe perimate.
-- Nou: sărbătorile legale ale României (listă verificată la 11 octombrie 2026 în Codul muncii art. 139 și într-o listă 2026; Paștele ortodox calculat prin algoritmul Meeus, +13 zile) contează ca zile libere în numărătoarea săptămânii; bifă de oprire, linie „următoarea sărbătoare”. Captura de ecran actualizată.
+## License
 
-## Licență
+MIT License — see the `LICENSE` file.
 
-Licență MIT — vezi fișierul `LICENSE`.
-
-## Autor
+## Author
 
 Alexio — Alexandru-Ionuț Chiuță, contact: alexio@trom.tf
 
-## English summary
+## Summary
 
 CLEPSIDRA is a single-file Romanian "reverse clock": time remaining in the day and in the work week/weekend, a day schedule with separate weekday and weekend templates, and an alarm. DST days (23/25 h) are handled via calendar midnight. No network requests, no telemetry; settings are kept in localStorage and validated on load. The alarm only works while the page is open and active (it is honest about this in the UI). License not yet declared.
