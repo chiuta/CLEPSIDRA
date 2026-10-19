@@ -2,7 +2,9 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · **Deutsch** · [Magyar](README.hu.md)
 
-**Version:** 1.1.0 · **Zuletzt aktualisiert:** 2026-10-14
+**Version:** 1.2.0 · **Zuletzt aktualisiert:** 2026-10-19
+
+Oberflächensprachen: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
 Umgekehrte Uhr: nicht die vergangene Zeit, sondern die verbleibende Zeit des Tages und der Woche, dazu ein Wecker und Zeitpläne für Werktage und Wochenende.
 
@@ -12,7 +14,7 @@ Umgekehrte Uhr: nicht die vergangene Zeit, sondern die verbleibende Zeit des Tag
 
 ## Was es ist
 
-Eine einzige HTML-Datei ohne externe Abhängigkeiten, auf Rumänisch. Sie zeigt, wie viel Zeit bis Mitternacht bleibt, wie viel von der Arbeitswoche (oder vom Wochenende) übrig ist, welche Aktivität „jetzt" nach deinem Zeitplan ansteht und wie viele Stunden heute in jeder Kategorie noch bleiben. Sie geht „von einem Gedanken aus dem Buch Nemurirea über die biologische Uhr" aus.
+Eine einzige HTML-Datei ohne externe Abhängigkeiten, mit einer Oberfläche in 8 Sprachen. Sie zeigt, wie viel Zeit bis Mitternacht bleibt, wie viel von der Arbeitswoche (oder vom Wochenende) übrig ist, welche Aktivität „jetzt" nach deinem Zeitplan ansteht und wie viele Stunden heute in jeder Kategorie noch bleiben. Sie geht „von einem Gedanken aus dem Buch Nemurirea über die biologische Uhr" aus.
 
 ## Funktionen
 
@@ -28,7 +30,7 @@ Im Code und in automatisierten Tests geprüft (Headless-Chromium, simulierte Uhr
 - **Kalenderexport (.ics)** für: den Tageszeitplan (Werktage / Wochenende, wöchentliche Wiederholung, Uhrzeiten als „schwebende Zeiten", mit Ausnahmen für die gesetzlichen Feiertage Rumäniens über 12 Monate), deine Ereignisse (mit einer Erinnerung 15 Minuten vorher) und den Wecker (tägliche Wiederholung, wenn „täglich wiederholen" angehakt ist). Die Dateien wurden mit der Python-Bibliothek `icalendar` und mit einer unabhängigen Berechnung des orthodoxen Osterdatums geprüft.
 - **Drucken / PDF des Zeitplans**: Die Drucktaste bereitet ein Blatt mit den beiden Zeitplänen (Werktage und Wochenende) und der Ereignisliste vor; der Rest der Seite wird nicht gedruckt.
 - Sicherung als `.fff.json` (gemeinsamer „fff-kit"-Modus, lokal, ohne Netzwerk): wird über den Dialog geöffnet, der beim Klick auf die Version im Fußbereich erscheint (Export, passwortverschlüsselter Export, Import mit Bestätigung, Löschen der App-Daten). Die Sicherung umfasst die Schlüssel `clepsidra.*`.
-- Die Oberfläche ist nur auf Rumänisch; es gibt keine neuen Übersetzungen zu prüfen.
+- Die Oberfläche hat 8 Sprachen (RO, EN, FR, IT, ES, PT, DE, HU); die Übersetzungen außer Rumänisch sind automatisch und nicht von Muttersprachlern geprüft.
 
 ## Bedienungsanleitung
 
@@ -82,4 +84,4 @@ Alexio — Alexandru-Ionuț Chiuță, Kontakt: alexio@trom.tf
 
 ## Zusammenfassung
 
-CLEPSIDRA ist eine rumänische „umgekehrte Uhr" in einer einzigen Datei: verbleibende Zeit des Tages und der Arbeitswoche/des Wochenendes, ein Tageszeitplan mit getrennten Vorlagen für Werktage und Wochenende sowie ein Wecker. Tage mit Zeitumstellung (23/25 h) werden über die Kalendermitternacht behandelt. Keine Netzwerkanfragen, keine Telemetrie; Einstellungen werden in localStorage gehalten und beim Laden validiert. Der Wecker funktioniert nur, solange die Seite geöffnet und aktiv ist (die App ist dazu in der Oberfläche ehrlich). Lizenz noch nicht festgelegt.
+CLEPSIDRA ist eine „umgekehrte Uhr" in einer einzigen Datei, mit einer Oberfläche in 8 Sprachen: verbleibende Zeit des Tages und der Arbeitswoche/des Wochenendes, ein Tageszeitplan mit getrennten Vorlagen für Werktage und Wochenende sowie ein Wecker. Tage mit Zeitumstellung (23/25 h) werden über die Kalendermitternacht behandelt. Keine Netzwerkanfragen, keine Telemetrie; Einstellungen werden in localStorage gehalten und beim Laden validiert. Der Wecker funktioniert nur, solange die Seite geöffnet und aktiv ist (die App ist dazu in der Oberfläche ehrlich). Lizenz noch nicht festgelegt.

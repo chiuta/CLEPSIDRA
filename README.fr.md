@@ -2,7 +2,9 @@
 
 [English](README.md) · [Română](README.ro.md) · **Français** · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version :** 1.1.0 · **Dernière mise à jour :** 2026-10-14
+**Version :** 1.2.0 · **Dernière mise à jour :** 2026-10-19
+
+Langues de l'interface : **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
 Horloge inversée : non pas le temps écoulé, mais le temps restant dans la journée et dans la semaine, avec en plus une alarme et des emplois du temps pour les jours ouvrables et le week-end.
 
@@ -12,7 +14,7 @@ Horloge inversée : non pas le temps écoulé, mais le temps restant dans la jou
 
 ## De quoi s'agit-il
 
-Un seul fichier HTML, sans dépendances externes, en roumain. Il indique combien de temps il reste jusqu'à minuit, combien il reste de la semaine de travail (ou du week-end), quelle activité a lieu « maintenant » selon votre emploi du temps, et combien d'heures il reste aujourd'hui dans chaque catégorie. Il part « d'une pensée du livre Nemurirea, sur l'horloge biologique ».
+Un seul fichier HTML, sans dépendances externes, avec une interface en 8 langues. Il indique combien de temps il reste jusqu'à minuit, combien il reste de la semaine de travail (ou du week-end), quelle activité a lieu « maintenant » selon votre emploi du temps, et combien d'heures il reste aujourd'hui dans chaque catégorie. Il part « d'une pensée du livre Nemurirea, sur l'horloge biologique ».
 
 ## Fonctionnalités
 
@@ -28,7 +30,7 @@ Vérifiées dans le code et dans des tests automatisés (Chromium sans interface
 - **Export de calendrier (.ics)** pour : l'emploi du temps de la journée (jours ouvrables / week-end, répétition hebdomadaire, heures en « heures flottantes », avec exceptions pour les jours fériés légaux de Roumanie sur 12 mois), vos événements (avec un rappel 15 minutes avant) et l'alarme (répétition quotidienne si « répéter chaque jour » est coché). Les fichiers ont été vérifiés avec la bibliothèque Python `icalendar` et avec un calcul indépendant de la Pâques orthodoxe.
 - **Impression / PDF de l'emploi du temps** : le bouton d'impression prépare une feuille avec les deux emplois du temps (jours ouvrables et week-end) et la liste des événements ; le reste de la page n'est pas imprimé.
 - Sauvegarde `.fff.json` (mode commun « fff-kit », local, sans réseau) : s'ouvre depuis la fenêtre qui apparaît en cliquant sur la version dans le pied de page (export, export chiffré par mot de passe, import avec confirmation, suppression des données de l'application). La sauvegarde couvre les clés `clepsidra.*`.
-- L'interface est uniquement en roumain ; il n'y a pas de nouvelles traductions à vérifier.
+- L'interface compte 8 langues (RO, EN, FR, IT, ES, PT, DE, HU) ; les traductions autres que le roumain sont automatiques et non vérifiées par des locuteurs natifs.
 
 ## Mode d'emploi
 
@@ -82,4 +84,4 @@ Alexio — Alexandru-Ionuț Chiuță, contact : alexio@trom.tf
 
 ## Résumé
 
-CLEPSIDRA est une « horloge inversée » roumaine en un seul fichier : temps restant dans la journée et dans la semaine de travail/le week-end, un emploi du temps de la journée avec des modèles distincts pour les jours ouvrables et le week-end, et une alarme. Les jours de changement d'heure (23/25 h) sont gérés via le minuit calendaire. Aucune requête réseau, aucune télémétrie ; les réglages sont conservés dans localStorage et validés au chargement. L'alarme ne fonctionne que tant que la page est ouverte et active (l'application le dit franchement dans l'interface). Licence non encore déclarée.
+CLEPSIDRA est une « horloge inversée » en un seul fichier, à interface en 8 langues : temps restant dans la journée et dans la semaine de travail/le week-end, un emploi du temps de la journée avec des modèles distincts pour les jours ouvrables et le week-end, et une alarme. Les jours de changement d'heure (23/25 h) sont gérés via le minuit calendaire. Aucune requête réseau, aucune télémétrie ; les réglages sont conservés dans localStorage et validés au chargement. L'alarme ne fonctionne que tant que la page est ouverte et active (l'application le dit franchement dans l'interface). Licence non encore déclarée.

@@ -2,7 +2,9 @@
 
 [English](README.md) · **Română** · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versiune:** 1.1.0 · **Ultima actualizare:** 2026-10-14
+**Versiune:** 1.2.0 · **Ultima actualizare:** 2026-10-19
+
+Limbile interfeței: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
 Ceas invers: nu timpul scurs, ci timpul rămas din zi și din săptămână, plus alarmă și programe pentru zile lucrătoare și weekend.
 
@@ -12,7 +14,7 @@ Ceas invers: nu timpul scurs, ci timpul rămas din zi și din săptămână, plu
 
 ## Ce este
 
-Un singur fișier HTML, fără dependențe externe, în limba română. Arată cât a mai rămas până la miezul nopții, cât a mai rămas din săptămâna de lucru (sau din weekend), ce activitate are loc „acum” după programul tău și câte ore au mai rămas azi din fiecare categorie. Pornește „de la un gând din cartea Nemurirea, despre ceasul biologic”.
+Un singur fișier HTML, fără dependențe externe, cu interfață în 8 limbi. Arată cât a mai rămas până la miezul nopții, cât a mai rămas din săptămâna de lucru (sau din weekend), ce activitate are loc „acum” după programul tău și câte ore au mai rămas azi din fiecare categorie. Pornește „de la un gând din cartea Nemurirea, despre ceasul biologic”.
 
 ## Funcții
 
@@ -28,7 +30,7 @@ Verificate în cod și în teste automate (Chromium headless, ceas simulat, fus 
 - **Export calendar (.ics)** pentru: programul zilei (zile lucrătoare / weekend, repetare săptămânală, orele ca „ore plutitoare”, cu excepții pentru sărbătorile legale ale României pe 12 luni), evenimentele tale (cu memento cu 15 minute înainte) și alarma (repetare zilnică dacă „repetă zilnic” este bifat). Fișierele au fost verificate cu biblioteca Python `icalendar` și cu un calcul independent al Paștelui ortodox.
 - **Tipărire / PDF a programului**: butonul de tipărire pregătește o foaie cu cele două programe (zile lucrătoare și weekend) și lista evenimentelor; restul paginii nu se tipărește.
 - Copie de siguranță `.fff.json` (modul comun „fff-kit”, local, fără rețea): se deschide din dialogul care apare la clic pe versiunea din subsol (export, export criptat cu parolă, import cu confirmare, ștergerea datelor aplicației). Copia cuprinde cheile `clepsidra.*`.
-- Interfața este numai în română; nu există traduceri noi de verificat.
+- Interfața are 8 limbi (RO, EN, FR, IT, ES, PT, DE, HU); traducerile în afară de română sunt automate și neverificate de vorbitori nativi.
 
 ## Manual de utilizare
 
@@ -82,4 +84,4 @@ Alexio — Alexandru-Ionuț Chiuță, contact: alexio@trom.tf
 
 ## English summary
 
-CLEPSIDRA is a single-file Romanian "reverse clock": time remaining in the day and in the work week/weekend, a day schedule with separate weekday and weekend templates, and an alarm. DST days (23/25 h) are handled via calendar midnight. No network requests, no telemetry; settings are kept in localStorage and validated on load. The alarm only works while the page is open and active (it is honest about this in the UI). License not yet declared.
+CLEPSIDRA is a single-file "reverse clock" with an 8-language interface: time remaining in the day and in the work week/weekend, a day schedule with separate weekday and weekend templates, and an alarm. DST days (23/25 h) are handled via calendar midnight. No network requests, no telemetry; settings are kept in localStorage and validated on load. The alarm only works while the page is open and active (it is honest about this in the UI). License not yet declared.

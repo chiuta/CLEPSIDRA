@@ -2,7 +2,9 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · **Italiano** · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versione:** 1.1.0 · **Ultimo aggiornamento:** 2026-10-14
+**Versione:** 1.2.0 · **Ultimo aggiornamento:** 2026-10-19
+
+Lingue dell'interfaccia: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
 Orologio inverso: non il tempo trascorso, ma il tempo rimanente della giornata e della settimana, più una sveglia e programmi per i giorni lavorativi e il fine settimana.
 
@@ -12,7 +14,7 @@ Orologio inverso: non il tempo trascorso, ma il tempo rimanente della giornata e
 
 ## Che cos'è
 
-Un unico file HTML, senza dipendenze esterne, in lingua rumena. Mostra quanto manca a mezzanotte, quanto resta della settimana lavorativa (o del fine settimana), quale attività si svolge «adesso» secondo il tuo programma e quante ore restano oggi per ciascuna categoria. Nasce «da un pensiero del libro Nemurirea, sull'orologio biologico».
+Un unico file HTML, senza dipendenze esterne, con interfaccia in 8 lingue. Mostra quanto manca a mezzanotte, quanto resta della settimana lavorativa (o del fine settimana), quale attività si svolge «adesso» secondo il tuo programma e quante ore restano oggi per ciascuna categoria. Nasce «da un pensiero del libro Nemurirea, sull'orologio biologico».
 
 ## Funzioni
 
@@ -28,7 +30,7 @@ Verificate nel codice e in test automatici (Chromium headless, orologio simulato
 - **Esportazione calendario (.ics)** per: il programma della giornata (giorni lavorativi / fine settimana, ripetizione settimanale, orari come «ore flottanti», con eccezioni per le festività legali della Romania su 12 mesi), i tuoi eventi (con promemoria 15 minuti prima) e la sveglia (ripetizione giornaliera se «ripeti ogni giorno» è spuntato). I file sono stati verificati con la libreria Python `icalendar` e con un calcolo indipendente della Pasqua ortodossa.
 - **Stampa / PDF del programma**: il pulsante di stampa prepara un foglio con i due programmi (giorni lavorativi e fine settimana) e l'elenco degli eventi; il resto della pagina non viene stampato.
 - Copia di sicurezza `.fff.json` (modalità comune «fff-kit», locale, senza rete): si apre dalla finestra che compare cliccando sulla versione nel piè di pagina (esportazione, esportazione cifrata con password, importazione con conferma, cancellazione dei dati dell'app). La copia comprende le chiavi `clepsidra.*`.
-- L'interfaccia è solo in rumeno; non ci sono nuove traduzioni da verificare.
+- L'interfaccia ha 8 lingue (RO, EN, FR, IT, ES, PT, DE, HU); le traduzioni diverse dal rumeno sono automatiche e non verificate da madrelingua.
 
 ## Guida all'uso
 
@@ -82,4 +84,4 @@ Alexio — Alexandru-Ionuț Chiuță, contatto: alexio@trom.tf
 
 ## Riepilogo
 
-CLEPSIDRA è un «orologio inverso» rumeno in un unico file: tempo rimanente della giornata e della settimana lavorativa/fine settimana, un programma giornaliero con modelli separati per i giorni lavorativi e il fine settimana, e una sveglia. I giorni con cambio d'ora (23/25 h) sono gestiti tramite la mezzanotte di calendario. Nessuna richiesta di rete, nessuna telemetria; le impostazioni sono conservate in localStorage e convalidate al caricamento. La sveglia funziona solo finché la pagina è aperta e attiva (l'app lo dice con franchezza nell'interfaccia). Licenza non ancora dichiarata.
+CLEPSIDRA è un «orologio inverso» in un unico file, con interfaccia in 8 lingue: tempo rimanente della giornata e della settimana lavorativa/fine settimana, un programma giornaliero con modelli separati per i giorni lavorativi e il fine settimana, e una sveglia. I giorni con cambio d'ora (23/25 h) sono gestiti tramite la mezzanotte di calendario. Nessuna richiesta di rete, nessuna telemetria; le impostazioni sono conservate in localStorage e convalidate al caricamento. La sveglia funziona solo finché la pagina è aperta e attiva (l'app lo dice con franchezza nell'interfaccia). Licenza non ancora dichiarata.

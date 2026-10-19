@@ -2,7 +2,9 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · **Magyar**
 
-**Verzió:** 1.1.0 · **Utolsó frissítés:** 2026-10-14
+**Verzió:** 1.2.0 · **Utolsó frissítés:** 2026-10-19
+
+A felület nyelvei: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
 Fordított óra: nem az eltelt időt, hanem a nap és a hét hátralévő idejét mutatja, ráadásul ébresztővel és a munkanapokra, illetve a hétvégére szóló napirenddel.
 
@@ -12,7 +14,7 @@ Fordított óra: nem az eltelt időt, hanem a nap és a hét hátralévő idejé
 
 ## Mi ez
 
-Egyetlen HTML-fájl, külső függőségek nélkül, román nyelven. Megmutatja, mennyi van még éjfélig, mennyi van hátra a munkahétből (vagy a hétvégéből), milyen tevékenység zajlik „most” a napirended szerint, és hány óra van még ma hátra az egyes kategóriákból. „A Nemurirea című könyv egy gondolatából indul ki, a biológiai óráról”.
+Egyetlen HTML-fájl, külső függőségek nélkül, 8 nyelvű felülettel. Megmutatja, mennyi van még éjfélig, mennyi van hátra a munkahétből (vagy a hétvégéből), milyen tevékenység zajlik „most” a napirended szerint, és hány óra van még ma hátra az egyes kategóriákból. „A Nemurirea című könyv egy gondolatából indul ki, a biológiai óráról”.
 
 ## Funkciók
 
@@ -28,7 +30,7 @@ Kódban és automatizált tesztekben ellenőrizve (fej nélküli Chromium, szimu
 - **Naptárexport (.ics)** ezekhez: a napi napirend (munkanapok / hétvége, heti ismétlés, az időpontok „lebegő időként”, Románia törvényes ünnepnapjaira vonatkozó kivételekkel 12 hónapra), az eseményeid (15 perccel előtte emlékeztetővel) és az ébresztő (napi ismétlés, ha az „ismétlés naponta” be van jelölve). A fájlokat a Python `icalendar` könyvtárral és az ortodox húsvét független kiszámításával ellenőriztük.
 - **A napirend nyomtatása / PDF-be mentése**: a nyomtatás gomb egy lapot készít elő a két napirenddel (munkanapok és hétvége) és az események listájával; az oldal többi része nem nyomtatódik.
 - `.fff.json` biztonsági mentés (közös „fff-kit” mód, helyi, hálózat nélkül): a láblécben a verzióra kattintva megjelenő párbeszédablakból nyitható meg (exportálás, jelszóval titkosított exportálás, importálás megerősítéssel, az alkalmazásadatok törlése). A mentés a `clepsidra.*` kulcsokat tartalmazza.
-- A felület csak románul érhető el; nincs ellenőrizendő új fordítás.
+- A felület 8 nyelvű (RO, EN, FR, IT, ES, PT, DE, HU); a romántól eltérő fordítások gépiek, és anyanyelvi beszélők nem ellenőrizték őket.
 
 ## Használati útmutató
 
@@ -82,4 +84,4 @@ Alexio — Alexandru-Ionuț Chiuță, elérhetőség: alexio@trom.tf
 
 ## Összefoglaló
 
-A CLEPSIDRA egy egyfájlos román „fordított óra”: a nap és a munkahét/hétvége hátralévő ideje, külön munkanapi és hétvégi sablonnal rendelkező napirend, valamint ébresztő. Az óraállításos napokat (23/25 óra) a naptári éjfélen keresztül kezeli. Nincsenek hálózati kérések, nincs telemetria; a beállításokat a localStorage őrzi, és betöltéskor ellenőrzi. Az ébresztő csak addig működik, amíg az oldal nyitva és aktív (az alkalmazás ezt a felületen őszintén közli). Licenc még nincs megadva.
+A CLEPSIDRA egy egyfájlos „fordított óra”, 8 nyelvű felülettel: a nap és a munkahét/hétvége hátralévő ideje, külön munkanapi és hétvégi sablonnal rendelkező napirend, valamint ébresztő. Az óraállításos napokat (23/25 óra) a naptári éjfélen keresztül kezeli. Nincsenek hálózati kérések, nincs telemetria; a beállításokat a localStorage őrzi, és betöltéskor ellenőrzi. Az ébresztő csak addig működik, amíg az oldal nyitva és aktív (az alkalmazás ezt a felületen őszintén közli). Licenc még nincs megadva.

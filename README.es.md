@@ -2,7 +2,9 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · **Español** · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versión:** 1.1.0 · **Última actualización:** 2026-10-14
+**Versión:** 1.2.0 · **Última actualización:** 2026-10-19
+
+Idiomas de la interfaz: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
 Reloj inverso: no el tiempo transcurrido, sino el tiempo que queda del día y de la semana, además de una alarma y horarios para los días laborables y el fin de semana.
 
@@ -12,7 +14,7 @@ Reloj inverso: no el tiempo transcurrido, sino el tiempo que queda del día y de
 
 ## Qué es
 
-Un único archivo HTML, sin dependencias externas, en rumano. Muestra cuánto falta para la medianoche, cuánto queda de la semana laboral (o del fin de semana), qué actividad toca «ahora» según tu horario y cuántas horas quedan hoy de cada categoría. Parte «de un pensamiento del libro Nemurirea, sobre el reloj biológico».
+Un único archivo HTML, sin dependencias externas, con interfaz en 8 idiomas. Muestra cuánto falta para la medianoche, cuánto queda de la semana laboral (o del fin de semana), qué actividad toca «ahora» según tu horario y cuántas horas quedan hoy de cada categoría. Parte «de un pensamiento del libro Nemurirea, sobre el reloj biológico».
 
 ## Funciones
 
@@ -28,7 +30,7 @@ Verificadas en el código y en pruebas automáticas (Chromium sin interfaz, relo
 - **Exportación de calendario (.ics)** de: el horario del día (días laborables / fin de semana, repetición semanal, horas como «horas flotantes», con excepciones para los festivos legales de Rumanía durante 12 meses), tus eventos (con un recordatorio 15 minutos antes) y la alarma (repetición diaria si «repetir a diario» está marcado). Los archivos se verificaron con la biblioteca de Python `icalendar` y con un cálculo independiente de la Pascua ortodoxa.
 - **Impresión / PDF del horario**: el botón de impresión prepara una hoja con los dos horarios (días laborables y fin de semana) y la lista de eventos; el resto de la página no se imprime.
 - Copia de seguridad `.fff.json` (modo común «fff-kit», local, sin red): se abre desde el cuadro de diálogo que aparece al hacer clic en la versión del pie de página (exportación, exportación cifrada con contraseña, importación con confirmación, borrado de los datos de la aplicación). La copia abarca las claves `clepsidra.*`.
-- La interfaz está solo en rumano; no hay traducciones nuevas que verificar.
+- La interfaz tiene 8 idiomas (RO, EN, FR, IT, ES, PT, DE, HU); las traducciones distintas del rumano son automáticas y no están verificadas por hablantes nativos.
 
 ## Guía de uso
 
@@ -82,4 +84,4 @@ Alexio — Alexandru-Ionuț Chiuță, contacto: alexio@trom.tf
 
 ## Resumen
 
-CLEPSIDRA es un «reloj inverso» rumano de un solo archivo: tiempo restante del día y de la semana laboral/fin de semana, un horario diario con plantillas separadas para los días laborables y el fin de semana, y una alarma. Los días con cambio de hora (23/25 h) se gestionan mediante la medianoche del calendario. Sin solicitudes de red, sin telemetría; los ajustes se guardan en localStorage y se validan al cargar. La alarma solo funciona mientras la página está abierta y activa (la aplicación es sincera al respecto en la interfaz). Licencia aún no declarada.
+CLEPSIDRA es un «reloj inverso» de un solo archivo, con interfaz en 8 idiomas: tiempo restante del día y de la semana laboral/fin de semana, un horario diario con plantillas separadas para los días laborables y el fin de semana, y una alarma. Los días con cambio de hora (23/25 h) se gestionan mediante la medianoche del calendario. Sin solicitudes de red, sin telemetría; los ajustes se guardan en localStorage y se validan al cargar. La alarma solo funciona mientras la página está abierta y activa (la aplicación es sincera al respecto en la interfaz). Licencia aún no declarada.

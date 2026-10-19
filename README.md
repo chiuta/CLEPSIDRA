@@ -2,7 +2,9 @@
 
 **English** · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version:** 1.1.0 · **Last updated:** 2026-10-14
+**Version:** 1.2.0 · **Last updated:** 2026-10-19
+
+Interface languages: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
 Reverse clock: not the time elapsed, but the time remaining in the day and in the week, plus an alarm and schedules for working days and weekends.
 
@@ -12,7 +14,7 @@ Reverse clock: not the time elapsed, but the time remaining in the day and in th
 
 ## What it is
 
-A single HTML file with no external dependencies, in Romanian. It shows how much is left until midnight, how much is left of the working week (or of the weekend), what activity is taking place "now" according to your schedule, and how many hours are left today in each category. It starts "from a thought in the book Nemurirea, about the biological clock".
+A single HTML file with no external dependencies, with an interface in 8 languages. It shows how much is left until midnight, how much is left of the working week (or of the weekend), what activity is taking place "now" according to your schedule, and how many hours are left today in each category. It starts "from a thought in the book Nemurirea, about the biological clock".
 
 ## Features
 
@@ -28,7 +30,7 @@ Verified in the code and in automated tests (headless Chromium, simulated clock,
 - **Calendar export (.ics)** for: the day schedule (working days / weekend, weekly repetition, hours as "floating hours", with exceptions for Romania's public holidays over 12 months), your events (with a reminder 15 minutes before) and the alarm (daily repetition if "repeat daily" is ticked). The files were checked with the Python library `icalendar` and with an independent calculation of Orthodox Easter.
 - **Print / PDF of the schedule**: the print button prepares a sheet with the two schedules (working days and weekend) and the list of events; the rest of the page is not printed.
 - `.fff.json` backup (shared "fff-kit" mode, local, no network): opened from the dialog that appears when you click the version in the footer (export, password-encrypted export, import with confirmation, deletion of the app data). The backup covers the `clepsidra.*` keys.
-- The interface is in Romanian only; there are no new translations to check.
+- The interface has 8 languages (RO, EN, FR, IT, ES, PT, DE, HU); the translations other than Romanian are automatic and not verified by native speakers.
 
 ## User guide
 
@@ -82,4 +84,4 @@ Alexio — Alexandru-Ionuț Chiuță, contact: alexio@trom.tf
 
 ## Summary
 
-CLEPSIDRA is a single-file Romanian "reverse clock": time remaining in the day and in the work week/weekend, a day schedule with separate weekday and weekend templates, and an alarm. DST days (23/25 h) are handled via calendar midnight. No network requests, no telemetry; settings are kept in localStorage and validated on load. The alarm only works while the page is open and active (it is honest about this in the UI). License not yet declared.
+CLEPSIDRA is a single-file "reverse clock" with an 8-language interface: time remaining in the day and in the work week/weekend, a day schedule with separate weekday and weekend templates, and an alarm. DST days (23/25 h) are handled via calendar midnight. No network requests, no telemetry; settings are kept in localStorage and validated on load. The alarm only works while the page is open and active (it is honest about this in the UI). License not yet declared.
