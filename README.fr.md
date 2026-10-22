@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · **Français** · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version :** 1.2.1 · **Dernière mise à jour :** 2026-10-22
+**Version :** 1.2.2 · **Dernière mise à jour :** 2026-10-22
 
 Langues de l'interface : **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -59,6 +59,9 @@ Vérifiées dans le code et dans des tests automatisés (Chromium sans interface
 Téléchargez `index.html` et ouvrez-le dans un navigateur ; il fonctionne entièrement sans internet.
 
 ## Historique / Changelog
+
+### 1.2.2 — 2026-10-22
+- fff-kit 1.1.2 : PBKDF2 600 000 itérations, protection anti-clickjacking
 
 ### 14 octobre 2026 (v1.1.0)
 - Export `.ics` (emploi du temps, événements, alarme), feuille d'impression / PDF de l'emploi du temps.

@@ -64,7 +64,7 @@ print(' '.join(sorted(out)))`;
 
 {
   const {ctx, page, errs, net} = await open();
-  check('versiune 1.2.1 în meta și #app-version', await page.evaluate(() => document.querySelector('meta[name=application-version]').content === '1.2.1' && /^v 1\.2\.1 · 2026-10-22$/.test(document.getElementById('app-version').textContent.trim())));
+  check('versiune 1.2.2 în meta și #app-version', await page.evaluate(() => document.querySelector('meta[name=application-version]').content === '1.2.2' && /^v 1\.2\.2 · 2026-10-22$/.test(document.getElementById('app-version').textContent.trim())));
 
   // --- program ---
   const s = await download(page, '#icsScheduleBtn');

@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · **Italiano** · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versione:** 1.2.1 · **Ultimo aggiornamento:** 2026-10-22
+**Versione:** 1.2.2 · **Ultimo aggiornamento:** 2026-10-22
 
 Lingue dell'interfaccia: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -27,6 +27,7 @@ Verificate nel codice e in test automatici (Chromium headless, orologio simulato
 
 ## Novità (1.1.0)
 
+- 1.2.2 — 2026-10-22: fff-kit 1.1.2: PBKDF2 600.000 iterazioni, protezione anti-clickjacking
 - **Esportazione calendario (.ics)** per: il programma della giornata (giorni lavorativi / fine settimana, ripetizione settimanale, orari come «ore flottanti», con eccezioni per le festività legali della Romania su 12 mesi), i tuoi eventi (con promemoria 15 minuti prima) e la sveglia (ripetizione giornaliera se «ripeti ogni giorno» è spuntato). I file sono stati verificati con la libreria Python `icalendar` e con un calcolo indipendente della Pasqua ortodossa.
 - **Stampa / PDF del programma**: il pulsante di stampa prepara un foglio con i due programmi (giorni lavorativi e fine settimana) e l'elenco degli eventi; il resto della pagina non viene stampato.
 - Copia di sicurezza `.fff.json` (modalità comune «fff-kit», locale, senza rete): si apre dalla finestra che compare cliccando sulla versione nel piè di pagina (esportazione, esportazione cifrata con password, importazione con conferma, cancellazione dei dati dell'app). La copia comprende le chiavi `clepsidra.*`.
