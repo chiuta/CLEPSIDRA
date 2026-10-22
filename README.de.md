@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · **Deutsch** · [Magyar](README.hu.md)
 
-**Version:** 1.2.0 · **Zuletzt aktualisiert:** 2026-10-19
+**Version:** 1.2.1 · **Zuletzt aktualisiert:** 2026-10-22
 
 Oberflächensprachen: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -42,7 +42,7 @@ Im Code und in automatisierten Tests geprüft (Headless-Chromium, simulierte Uhr
 ## Datenschutz und Netzwerk
 
 - Es wird keine Netzwerkanfrage gestellt; die Datei lädt keine externen Ressourcen (sie hat zudem eine restriktive CSP-Richtlinie) und hat keine Telemetrie.
-- Lokaler Speicher (`localStorage`): `clepsidra.schedule` (die Zeitpläne) und `clepsidra.alarm` (Weckzeit, Wiederholung, aktiv) und `clepsidra.holidays` (das Feiertags-Kontrollkästchen) und `clepsidra.events` (die Ereignisse). Die Daten im Speicher werden beim Laden validiert; ist der Speicher blockiert, funktioniert die App, behält die Einstellungen aber nicht.
+- Lokaler Speicher (`localStorage`): `clepsidra.schedule` (die Zeitpläne) und `clepsidra.alarm` (Weckzeit, Wiederholung, aktiv) und `clepsidra.holidays` (das Feiertags-Kontrollkästchen) und `clepsidra.events` (die Ereignisse). Die Daten im Speicher werden beim Laden validiert; ist der Speicher blockiert, funktioniert die App, behält die Einstellungen aber nicht. Die Schlüssel `clepsidra.schedule` und `clepsidra.events` werden absichtlich geteilt: Die App Orar liest sie (nur lesend), um die Stundenpläne und Countdowns zu importieren; CLEPSIDRA schreibt nie in die Schlüssel von Orar (`fff.orar.*`).
 - Die `.ics`-Exporte und die `.fff.json`-Sicherung werden im Browser erzeugt und nur beim Drücken der Tasten heruntergeladen; sie enthalten keine Daten außer den oben genannten.
 - Berechtigungen: Benachrichtigungen (nur beim Klick auf „aktivieren" angefordert) und Ton.
 
@@ -65,6 +65,7 @@ Lade `index.html` herunter und öffne sie im Browser; sie funktioniert vollstän
 - `.fff.json`-Sicherung über die gemeinsamen Module (core, label, bundle); neue Tests: `tests/fff-r8.test.mjs` und `tests/ics_check.py` (unabhängige Prüfung; benötigt das Python-Paket `icalendar`).
 
 ### 12. Oktober 2026 (v1.0.0)
+- 1.2.1 — 2026-10-22: die schwebende Buy-Me-a-Coffee-Schaltfläche verdeckt auf schmalen Bildschirmen keine Steuerelemente mehr (sie steht im Seitenfluss); Kontrollkästchen mit 24 px; die PRODID exportierter `.ics`-Dateien folgt der App-Version; die mit Orar geteilten Schlüssel sind dokumentiert (beabsichtigt, auf Orar-Seite nur lesend). Feinschliff für Mobilgeräte und Barrierefreiheit: Text mit mindestens 12 px und Touch-Ziele von mindestens 24 px.
 - 1.0.0 — 2026-10-12: Version und Datum der letzten Aktualisierung werden in der App angezeigt
 
 ### 11. Oktober 2026 (zweiter Eintrag)

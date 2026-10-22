@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · **Español** · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versión:** 1.2.0 · **Última actualización:** 2026-10-19
+**Versión:** 1.2.1 · **Última actualización:** 2026-10-22
 
 Idiomas de la interfaz: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -42,7 +42,7 @@ Verificadas en el código y en pruebas automáticas (Chromium sin interfaz, relo
 ## Privacidad y red
 
 - No se realiza ninguna solicitud de red; el archivo no carga recursos externos (además tiene una política CSP restrictiva) y no tiene telemetría.
-- Almacenamiento local (`localStorage`): `clepsidra.schedule` (los horarios) y `clepsidra.alarm` (hora de la alarma, repetición, activa) y `clepsidra.holidays` (la casilla de festivos legales) y `clepsidra.events` (los eventos). Los datos del almacenamiento se validan al cargar; si el almacenamiento está bloqueado, la aplicación funciona pero no conserva los ajustes.
+- Almacenamiento local (`localStorage`): `clepsidra.schedule` (los horarios) y `clepsidra.alarm` (hora de la alarma, repetición, activa) y `clepsidra.holidays` (la casilla de festivos legales) y `clepsidra.events` (los eventos). Los datos del almacenamiento se validan al cargar; si el almacenamiento está bloqueado, la aplicación funciona pero no conserva los ajustes. Las claves `clepsidra.schedule` y `clepsidra.events` se comparten a propósito: la aplicación Orar las lee (solo lectura) para importar los horarios y las cuentas atrás; CLEPSIDRA nunca escribe en las claves de Orar (`fff.orar.*`).
 - Las exportaciones `.ics` y la copia `.fff.json` se generan en el navegador y se descargan solo al pulsar los botones; no contienen datos distintos de los indicados arriba.
 - Permisos: notificaciones (solicitadas solo al hacer clic en «activar») y sonido.
 
@@ -65,6 +65,7 @@ Descarga `index.html` y ábrelo en un navegador; funciona por completo sin inter
 - Copia `.fff.json` mediante los módulos comunes (core, label, bundle); nuevas pruebas: `tests/fff-r8.test.mjs` y `tests/ics_check.py` (verificación independiente; requiere el paquete de Python `icalendar`).
 
 ### 12 de octubre de 2026 (v1.0.0)
+- 1.2.1 — 2026-10-22: el botón flotante Buy Me a Coffee ya no tapa los controles en pantallas estrechas (está en el flujo de la página); casillas de 24 px; el PRODID de los `.ics` exportados sigue la versión de la aplicación; las claves compartidas con Orar están documentadas (intencionado, solo lectura por parte de Orar). mejoras para móvil y accesibilidad: texto de al menos 12 px y áreas táctiles de al menos 24 px.
 - 1.0.0 — 2026-10-12: la versión y la fecha de la última actualización se muestran en la aplicación
 
 ### 11 de octubre de 2026 (segunda entrada)

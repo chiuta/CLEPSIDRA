@@ -2,7 +2,7 @@
 
 **English** · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version:** 1.2.0 · **Last updated:** 2026-10-19
+**Version:** 1.2.1 · **Last updated:** 2026-10-22
 
 Interface languages: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -42,7 +42,7 @@ Verified in the code and in automated tests (headless Chromium, simulated clock,
 ## Privacy and network
 
 - No network request is made; the file loads no external resources (it also has a restrictive CSP policy) and has no telemetry.
-- Local storage (`localStorage`): `clepsidra.schedule` (the schedules) and `clepsidra.alarm` (alarm time, repeat, active) and `clepsidra.holidays` (the public holidays checkbox) and `clepsidra.events` (the events). The data in storage is validated on load; if storage is blocked, the app works but does not keep the settings.
+- Local storage (`localStorage`): `clepsidra.schedule` (the schedules) and `clepsidra.alarm` (alarm time, repeat, active) and `clepsidra.holidays` (the public holidays checkbox) and `clepsidra.events` (the events). The data in storage is validated on load; if storage is blocked, the app works but does not keep the settings. The keys `clepsidra.schedule` and `clepsidra.events` are shared on purpose: the Orar app reads them (read-only) to import the schedules and countdowns; CLEPSIDRA never writes to Orar’s keys (`fff.orar.*`).
 - The `.ics` exports and the `.fff.json` backup are generated in the browser and downloaded only when you press the buttons; they contain no data beyond the above.
 - Permissions: notifications (requested only when you click "activate") and sound.
 
@@ -65,6 +65,7 @@ Download `index.html` and open it in a browser; it works completely without inte
 - `.fff.json` backup through the shared modules (core, label, bundle); new tests: `tests/fff-r8.test.mjs` and `tests/ics_check.py` (independent check; requires the Python package `icalendar`).
 
 ### 12 October 2026 (v1.0.0)
+- 1.2.1 — 2026-10-22: the floating Buy Me a Coffee button no longer covers controls on narrow screens (it sits in the page flow); checkbox targets of 24 px; the PRODID of exported `.ics` files follows the app version; the keys shared with Orar are documented (intentional, read-only on Orar’s side). mobile and accessibility polish: text at least 12 px and touch targets at least 24 px.
 - 1.0.0 — 2026-10-12: the version and the date of the last update are shown in the app
 
 ### 11 October 2026 (second entry)

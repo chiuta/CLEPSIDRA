@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · **Italiano** · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versione:** 1.2.0 · **Ultimo aggiornamento:** 2026-10-19
+**Versione:** 1.2.1 · **Ultimo aggiornamento:** 2026-10-22
 
 Lingue dell'interfaccia: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -42,7 +42,7 @@ Verificate nel codice e in test automatici (Chromium headless, orologio simulato
 ## Privacy e rete
 
 - Non viene effettuata alcuna richiesta di rete; il file non carica risorse esterne (ha anche una politica CSP restrittiva) e non ha telemetria.
-- Archiviazione locale (`localStorage`): `clepsidra.schedule` (i programmi) e `clepsidra.alarm` (ora della sveglia, ripetizione, attiva) e `clepsidra.holidays` (la casella delle festività legali) e `clepsidra.events` (gli eventi). I dati in archivio vengono convalidati al caricamento; se l'archiviazione è bloccata, l'app funziona ma non conserva le impostazioni.
+- Archiviazione locale (`localStorage`): `clepsidra.schedule` (i programmi) e `clepsidra.alarm` (ora della sveglia, ripetizione, attiva) e `clepsidra.holidays` (la casella delle festività legali) e `clepsidra.events` (gli eventi). I dati in archivio vengono convalidati al caricamento; se l'archiviazione è bloccata, l'app funziona ma non conserva le impostazioni. Le chiavi `clepsidra.schedule` e `clepsidra.events` sono condivise di proposito: l’app Orar le legge (sola lettura) per importare gli orari e i conti alla rovescia; CLEPSIDRA non scrive mai nelle chiavi di Orar (`fff.orar.*`).
 - Le esportazioni `.ics` e la copia `.fff.json` vengono generate nel browser e scaricate solo quando premi i pulsanti; non contengono dati diversi da quelli sopra indicati.
 - Permessi: notifiche (richieste solo al clic su «attiva») e suono.
 
@@ -65,6 +65,7 @@ Scarica `index.html` e aprilo nel browser; funziona completamente senza internet
 - Copia `.fff.json` tramite i moduli comuni (core, label, bundle); nuovi test: `tests/fff-r8.test.mjs` e `tests/ics_check.py` (verifica indipendente; richiede il pacchetto Python `icalendar`).
 
 ### 12 ottobre 2026 (v1.0.0)
+- 1.2.1 — 2026-10-22: il pulsante flottante Buy Me a Coffee non copre più i controlli sugli schermi stretti (sta nel flusso della pagina); caselle di controllo da 24 px; il PRODID dei file `.ics` esportati segue la versione dell’app; le chiavi condivise con Orar sono documentate (intenzionale, sola lettura lato Orar). rifiniture per mobile e accessibilità: testo di almeno 12 px e aree tattili di almeno 24 px.
 - 1.0.0 — 2026-10-12: la versione e la data dell'ultimo aggiornamento sono mostrate nell'app
 
 ### 11 ottobre 2026 (seconda voce)

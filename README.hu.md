@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · **Magyar**
 
-**Verzió:** 1.2.0 · **Utolsó frissítés:** 2026-10-19
+**Verzió:** 1.2.1 · **Utolsó frissítés:** 2026-10-22
 
 A felület nyelvei: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -42,7 +42,7 @@ Kódban és automatizált tesztekben ellenőrizve (fej nélküli Chromium, szimu
 ## Adatvédelem és hálózat
 
 - Nem történik hálózati kérés; a fájl nem tölt be külső erőforrásokat (szigorú CSP-szabályzata is van), és nincs benne telemetria.
-- Helyi tárolás (`localStorage`): `clepsidra.schedule` (a napirendek) és `clepsidra.alarm` (az ébresztés ideje, ismétlés, aktív) és `clepsidra.holidays` (a törvényes ünnepnapok jelölőnégyzete) és `clepsidra.events` (az események). A tárolt adatokat betöltéskor ellenőrzi; ha a tárolás le van tiltva, az alkalmazás működik, de nem őrzi meg a beállításokat.
+- Helyi tárolás (`localStorage`): `clepsidra.schedule` (a napirendek) és `clepsidra.alarm` (az ébresztés ideje, ismétlés, aktív) és `clepsidra.holidays` (a törvényes ünnepnapok jelölőnégyzete) és `clepsidra.events` (az események). A tárolt adatokat betöltéskor ellenőrzi; ha a tárolás le van tiltva, az alkalmazás működik, de nem őrzi meg a beállításokat. A `clepsidra.schedule` és `clepsidra.events` kulcsokat szándékosan osztják meg: az Orar alkalmazás (csak olvasásra) innen importálja a napirendeket és a visszaszámlálásokat; a CLEPSIDRA soha nem ír az Orar kulcsaiba (`fff.orar.*`).
 - Az `.ics` exportok és a `.fff.json` mentés a böngészőben jön létre, és csak a gombok megnyomásakor töltődik le; a fentieken kívül nem tartalmaz adatot.
 - Engedélyek: értesítések (csak az „aktiválás” gombra kattintáskor kéri) és hang.
 
@@ -65,6 +65,7 @@ Töltsd le az `index.html` fájlt, és nyisd meg böngészőben; internet nélk�
 - `.fff.json` mentés a közös modulokon keresztül (core, label, bundle); új tesztek: `tests/fff-r8.test.mjs` és `tests/ics_check.py` (független ellenőrzés; a Python `icalendar` csomagot igényli).
 
 ### 2026. október 12. (v1.0.0)
+- 1.2.1 — 2026-10-22: a lebegő Buy Me a Coffee gomb keskeny képernyőn már nem takar el vezérlőket (az oldal folyamában áll); 24 px-es jelölőnégyzetek; az exportált `.ics` fájlok PRODID-ja követi az alkalmazás verzióját; az Orarral megosztott kulcsok dokumentáltak (szándékos, az Orar oldalán csak olvasás). mobil és kisegítő finomítások: legalább 12 px-es szöveg és legalább 24 px-es érintési felületek.
 - 1.0.0 — 2026-10-12: a verzió és az utolsó frissítés dátuma megjelenik az alkalmazásban
 
 ### 2026. október 11. (második bejegyzés)

@@ -2,7 +2,7 @@
 
 [English](README.md) · **Română** · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versiune:** 1.2.0 · **Ultima actualizare:** 2026-10-19
+**Versiune:** 1.2.1 · **Ultima actualizare:** 2026-10-22
 
 Limbile interfeței: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -42,7 +42,7 @@ Verificate în cod și în teste automate (Chromium headless, ceas simulat, fus 
 ## Confidențialitate și rețea
 
 - Nu se face nicio cerere de rețea; fișierul nu încarcă resurse externe (are și o politică CSP restrictivă) și nu are telemetrie.
-- Stocare locală (`localStorage`): `clepsidra.schedule` (programele) și `clepsidra.alarm` (ora alarmei, repetare, activă) și `clepsidra.holidays` (bifa sărbători legale) și `clepsidra.events` (evenimentele). Datele din stocare sunt validate la încărcare; dacă stocarea e blocată, aplicația merge, dar nu păstrează setările.
+- Stocare locală (`localStorage`): `clepsidra.schedule` (programele) și `clepsidra.alarm` (ora alarmei, repetare, activă) și `clepsidra.holidays` (bifa sărbători legale) și `clepsidra.events` (evenimentele). Datele din stocare sunt validate la încărcare; dacă stocarea e blocată, aplicația merge, dar nu păstrează setările. Cheile `clepsidra.schedule` și `clepsidra.events` sunt partajate intenționat: aplicația Orar le citește (doar citire) ca să importe programele și numărătorile inverse; CLEPSIDRA nu scrie niciodată în cheile Orar (`fff.orar.*`).
 - Exporturile `.ics` și copia `.fff.json` se generează în browser și se descarcă doar la apăsarea butoanelor; nu conțin date în afara celor de mai sus.
 - Permisiuni: notificări (cerute doar la clicul pe „activează”) și sunet.
 
@@ -65,6 +65,7 @@ Descarcă `index.html` și deschide-l în browser; funcționează complet fără
 - Copie `.fff.json` prin modulele comune (core, label, bundle); teste noi: `tests/fff-r8.test.mjs` și `tests/ics_check.py` (verificare independentă; necesită pachetul Python `icalendar`).
 
 ### 12 octombrie 2026 (v1.0.0)
+- 1.2.1 — 2026-10-22: butonul plutitor Buy Me a Coffee nu mai acoperă controalele pe ecrane înguste (stă în fluxul paginii); ținte de 24 px la casetele de bifat; PRODID-ul fișierelor `.ics` exportate urmează versiunea aplicației; cheile partajate cu Orar sunt documentate (intenționat, doar citire din partea Orar). finisaje pentru mobil și accesibilitate: text de cel puțin 12 px și ținte tactile de cel puțin 24 px.
 - 1.0.0 — 2026-10-12: versiunea și data ultimei actualizări sunt afișate în aplicație
 
 ### 11 octombrie 2026 (a doua intrare)
