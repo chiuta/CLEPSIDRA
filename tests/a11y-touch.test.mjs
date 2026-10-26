@@ -2,10 +2,10 @@
 // Rulare: node tests/a11y-touch.test.mjs
 import path from "node:path";
 import {createRequire} from "node:module";
-const require = createRequire("/opt/node-tools/package.json"); const {chromium} = require("playwright");
+const require = createRequire(process.env.PW_ROOT || import.meta.url); const {chromium} = require("playwright");
 const FILE = "file://" + path.resolve(path.dirname(new URL(import.meta.url).pathname), "..", "index.html");
 let fails = 0, passes = 0; const check = (n, c, x) => { c ? (passes++, console.log("  ok  " + n)) : (fails++, console.log("FAIL  " + n + (x !== undefined ? "  -> " + JSON.stringify(x) : ""))); };
-const b = await chromium.launch({executablePath: "/opt/pw-browsers/chromium"});
+const b = await chromium.launch({executablePath: process.env.CHROMIUM_PATH || undefined});
 const p = await (await b.newContext({viewport: {width: 390, height: 800}})).newPage();
 const errs = []; p.on("pageerror", e => errs.push(String(e)));
 await p.goto(FILE); await p.waitForTimeout(1200);

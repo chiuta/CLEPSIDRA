@@ -1,22 +1,29 @@
 // Teste r8 (14 oct. 2026): export calendar (.ics) pentru program/evenimente/alarmă + tipărire program.
 // Rulare: node tests/fff-r8.test.mjs  (Playwright din /opt/node-tools, Chromium local, rețea blocată, ceas simulat 14.10.2026 10:00 Europe/Bucharest)
 // Verificarea independentă cu `icalendar`/`dateutil` (Python) rulează dacă pachetele sunt disponibile (FFF_PYLIB=<director>).
+// [fff-portable] axe-core: FFF_AXE / AXE_PATH, apoi pachetul `axe-core` (npm i -D axe-core). Dacă lipsește: undefined (testele cu axe pică cu mesaj clar).
+import {createRequire as __fffCR} from 'node:module';
+const __fffAxe = () => { try { return __fffCR(import.meta.url).resolve('axe-core/axe.min.js'); } catch { return undefined; } };
+// [fff-portable] versiunea/data/kitul aplicației se citesc din app.json (nu mai sunt hard-codate în teste)
+import {readFileSync as __fffRF} from 'node:fs';
+const __FFF_APP = JSON.parse(__fffRF(new URL('../app.json', import.meta.url), 'utf8'));
+const __fffRe = (s) => String(s).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 import fs from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
 import {spawnSync, execFileSync} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
 import {createRequire} from 'node:module';
-const require = createRequire('/opt/node-tools/package.json');
+const require = createRequire(process.env.PW_ROOT || import.meta.url);
 const {chromium} = require('playwright');
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const FILE = 'file://' + path.join(HERE, '..', 'index.html');
-const AXE = process.env.FFF_AXE || '/tmp/claude-0/-home-claude/78529928-3825-51c3-b9bd-0e81655ab6bc/scratchpad/sweep/node_modules/axe-core/axe.min.js';
+const AXE = process.env.FFF_AXE || __fffAxe();
 let ok = 0, bad = 0;
 const check = (n, c, x) => { if (c) { ok++; console.log('  ok   ' + n); } else { bad++; console.log('  FAIL ' + n + (x !== undefined ? '  → ' + JSON.stringify(x) : '')); } };
 const TMP = fs.mkdtempSync(path.join(process.env.FFF_TMP || os.tmpdir(), 'clep-'));
 
-const b = await chromium.launch({executablePath: '/opt/pw-browsers/chromium', args: ['--no-sandbox']});
+const b = await chromium.launch({executablePath: process.env.CHROMIUM_PATH || undefined, args: ['--no-sandbox']});
 async function open(w = 1280, h = 800) {
   const ctx = await b.newContext({viewport: {width: w, height: h}, acceptDownloads: true, locale: 'ro-RO', timezoneId: 'Europe/Bucharest'});
   const net = [];
@@ -64,7 +71,7 @@ print(' '.join(sorted(out)))`;
 
 {
   const {ctx, page, errs, net} = await open();
-  check('versiune 1.2.6 în meta și #app-version', await page.evaluate(() => document.querySelector('meta[name=application-version]').content === '1.2.6' && /^v 1\.2\.6 · 2026-10-26$/.test(document.getElementById('app-version').textContent.trim())));
+  check(`versiune ${__FFF_APP.version} în meta și #app-version`, await page.evaluate((__FFF_APP)=> document.querySelector('meta[name=application-version]').content === __FFF_APP.version && new RegExp(String.raw`^v ${__FFF_APP.versionRe} · ${__FFF_APP.updatedRe}$`).test(document.getElementById('app-version').textContent.trim()), {...__FFF_APP, versionRe: __fffRe(__FFF_APP.version), updatedRe: __fffRe(__FFF_APP.updated)}));
 
   // --- program ---
   const s = await download(page, '#icsScheduleBtn');
