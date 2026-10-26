@@ -2,7 +2,7 @@
   "schema": 1,
   "slug": "clepsidra",
   "name": "Clepsidra — ceas invers",
-  "version": "1.2.6",
+  "version": "2.0.0",
   "updated": "2026-10-26",
   "description": "Un ceas cu timpul rămas din zi și săptămână, alarmă și cronometre inverse pentru somn, muncă, mese și timp liber — cu programe separate pentru zilele lucrătoare și weekend.",
   "egress": [],
@@ -16,10 +16,13 @@
     "clepsidra.events",
     "clepsidra.holidays",
     "clepsidra.lang",
+    "clepsidra.rhist",
+    "clepsidra.routines",
+    "clepsidra.run",
     "clepsidra.schedule"
   ],
-  "sizeBytes": 264072,
-  "sha256": "92046e92195a0c0cdc71b193d8c8910d136716d71edc6d61591cb56e178e5430",
+  "sizeBytes": 305982,
+  "sha256": "c4215ef6b9584f079e1487ebe27222286809e885885d8e4495972ad5bf653fb3",
   "csp": {
     "present": true,
     "directives": {

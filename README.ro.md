@@ -2,7 +2,7 @@
 
 [English](README.md) · **Română** · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versiune:** 1.2.6 · **Ultima actualizare:** 2026-10-26
+**Versiune:** 2.0.0 · **Ultima actualizare:** 2026-10-26
 
 Limbile interfeței: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -31,6 +31,12 @@ Verificate în cod și în teste automate (Chromium headless, ceas simulat, fus 
 - **Tipărire / PDF a programului**: butonul de tipărire pregătește o foaie cu cele două programe (zile lucrătoare și weekend) și lista evenimentelor; restul paginii nu se tipărește.
 - Copie de siguranță `.fff.json` (modul comun „fff-kit”, local, fără rețea): se deschide din dialogul care apare la clic pe versiunea din subsol (export, export criptat cu parolă, import cu confirmare, ștergerea datelor aplicației). Copia cuprinde cheile `clepsidra.*`.
 - Interfața are 8 limbi (RO, EN, FR, IT, ES, PT, DE, HU); traducerile în afară de română sunt automate și neverificate de vorbitori nativi.
+
+## Funcții noi (2.0.0)
+
+- **Rutine compuse**: lanțuri de cronometre (de ex. studiu 25 min + pauză 5 min), cu sunet diferit pentru concentrare, pauză și final. Pornești de la un șablon (Pomodoro, 50 + 10, sau „din programul de azi”, adică intervalele rămase din programul tău) ori îți construiești propria rutină (până la 24 de etape și 10 repetări), pe care o poți salva (până la 8).
+- Rularea poate fi pusă în pauză, sărită sau oprită și își reia drumul după reîncărcarea paginii; **istoricul** ultimelor 30 de rulări se păstrează doar în acest browser și poate fi exportat ca `.csv` sau șters.
+- Sunetul și notificarea apar doar cât pagina rămâne deschisă (ca la alarmă). Cheile noi: `clepsidra.routines`, `clepsidra.rhist`, `clepsidra.run`. Nu s-a făcut legătura directă cu aplicația Orar (aplicațiile nu își schimbă date între ele); șablonul „din programul de azi” folosește programul din Clepsidra.
 
 ## Manual de utilizare
 

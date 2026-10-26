@@ -2,7 +2,7 @@
 
 **English** · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version:** 1.2.6 · **Last updated:** 2026-10-26
+**Version:** 2.0.0 · **Last updated:** 2026-10-26
 
 Interface languages: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -31,6 +31,10 @@ Verified in the code and in automated tests (headless Chromium, simulated clock,
 - **Print / PDF of the schedule**: the print button prepares a sheet with the two schedules (working days and weekend) and the list of events; the rest of the page is not printed.
 - `.fff.json` backup (shared "fff-kit" mode, local, no network): opened from the dialog that appears when you click the version in the footer (export, password-encrypted export, import with confirmation, deletion of the app data). The backup covers the `clepsidra.*` keys.
 - The interface has 8 languages (RO, EN, FR, IT, ES, PT, DE, HU); the translations other than Romanian are automatic and not verified by native speakers.
+
+## New in 2.0.0
+
+- **Composed routines**: chains of timers (e.g. 25 min focus + 5 min break) with distinct sounds for focus, break and finish. Start from a template (Pomodoro, 50 + 10, or "from today's schedule") or build your own (up to 24 steps, 10 repeats) and save it (up to 8). Pause, skip, stop; a running routine resumes after a page reload; the history of the last 30 runs stays in this browser only and can be exported as `.csv`.
 
 ## User guide
 
