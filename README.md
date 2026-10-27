@@ -2,7 +2,9 @@
 
 **English** · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version:** 2.0.0 · **Last updated:** 2026-10-26
+**Version:** 2.0.1 · **Last updated:** 2026-10-27
+
+**Status:** stable · **Offline:** complete
 
 Interface languages: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -15,6 +17,14 @@ Reverse clock: not the time elapsed, but the time remaining in the day and in th
 ## What it is
 
 A single HTML file with no external dependencies, with an interface in 8 languages. It shows how much is left until midnight, how much is left of the working week (or of the weekend), what activity is taking place "now" according to your schedule, and how many hours are left today in each category. It starts "from a thought in the book Nemurirea, about the biological clock".
+
+## Clepsidra, Clopoțel or Orar? What is the difference
+
+Three sister apps with different purposes. They do not exchange data with one another.
+
+- **CLEPSIDRA**: shows how much time is left (of the day, of the work week or of the weekend), with a personal daily schedule, events, an alarm and timer routines. It is for one person and their own day.
+- **[Clopoțel](https://chiuta.github.io/Clopotel/)**: a stage timer with a bell for conferences: it limits each speaker's time on the agenda and has a stage screen.
+- **[Orar](https://chiuta.github.io/Orar/)**: a calendar and weekly timetable (month / week / day / agenda) with events, RFC 5545-style recurrences, ISO weeks and public holidays; for longer-term planning.
 
 ## Features
 

@@ -2,7 +2,9 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · **Magyar**
 
-**Verzió:** 2.0.0 · **Utolsó frissítés:** 2026-10-26
+**Verzió:** 2.0.1 · **Utolsó frissítés:** 2026-10-27
+
+**Állapot:** stabil · **Offline:** teljes
 
 A felület nyelvei: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -15,6 +17,14 @@ Fordított óra: nem az eltelt időt, hanem a nap és a hét hátralévő idejé
 ## Mi ez
 
 Egyetlen HTML-fájl, külső függőségek nélkül, 8 nyelvű felülettel. Megmutatja, mennyi van még éjfélig, mennyi van hátra a munkahétből (vagy a hétvégéből), milyen tevékenység zajlik „most” a napirended szerint, és hány óra van még ma hátra az egyes kategóriákból. „A Nemurirea című könyv egy gondolatából indul ki, a biológiai óráról”.
+
+## Clepsidra, Clopoțel vagy Orar? Mi a különbség
+
+Három testvéralkalmazás, különböző célokra. Nem cserélnek adatot egymással.
+
+- **CLEPSIDRA**: azt mutatja, mennyi idő van hátra (a napból, a munkahétből vagy a hétvégéből), személyes napirenddel, eseményekkel, ébresztővel és időzítő-rutinokkal. Egy személynek és a saját napjának szól.
+- **[Clopoțel](https://chiuta.github.io/Clopotel/)**: színpadi időzítő csengővel konferenciákhoz: korlátozza a napirend minden előadójának idejét, és színpadi képernyője van.
+- **[Orar](https://chiuta.github.io/Orar/)**: naptár és heti órarend (hónap / hét / nap / napirend) eseményekkel, RFC 5545 stílusú ismétlődésekkel, ISO-hetekkel és ünnepnapokkal; hosszabb távú tervezéshez.
 
 ## Funkciók
 

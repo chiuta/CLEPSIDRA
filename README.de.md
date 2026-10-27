@@ -2,7 +2,9 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · **Deutsch** · [Magyar](README.hu.md)
 
-**Version:** 2.0.0 · **Zuletzt aktualisiert:** 2026-10-26
+**Version:** 2.0.1 · **Zuletzt aktualisiert:** 2026-10-27
+
+**Status:** stabil · **Offline:** vollständig
 
 Oberflächensprachen: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -15,6 +17,14 @@ Umgekehrte Uhr: nicht die vergangene Zeit, sondern die verbleibende Zeit des Tag
 ## Was es ist
 
 Eine einzige HTML-Datei ohne externe Abhängigkeiten, mit einer Oberfläche in 8 Sprachen. Sie zeigt, wie viel Zeit bis Mitternacht bleibt, wie viel von der Arbeitswoche (oder vom Wochenende) übrig ist, welche Aktivität „jetzt" nach deinem Zeitplan ansteht und wie viele Stunden heute in jeder Kategorie noch bleiben. Sie geht „von einem Gedanken aus dem Buch Nemurirea über die biologische Uhr" aus.
+
+## Clepsidra, Clopoțel oder Orar? Der Unterschied
+
+Drei Schwester-Apps mit unterschiedlichen Zwecken. Sie tauschen untereinander keine Daten aus.
+
+- **CLEPSIDRA**: zeigt, wie viel Zeit bleibt (vom Tag, von der Arbeitswoche oder vom Wochenende), mit persönlichem Tagesplan, Terminen, Wecker und Timer-Routinen. Sie ist für eine einzelne Person und deren eigenen Tag gedacht.
+- **[Clopoțel](https://chiuta.github.io/Clopotel/)**: Bühnen-Timer mit Glocke für Konferenzen: begrenzt die Zeit jedes Redners der Agenda und hat eine Bühnenanzeige.
+- **[Orar](https://chiuta.github.io/Orar/)**: Kalender und Wochenplan (Monat / Woche / Tag / Agenda) mit Terminen, Serien im Stil von RFC 5545, ISO-Wochen und Feiertagen; für längerfristige Planung.
 
 ## Funktionen
 
