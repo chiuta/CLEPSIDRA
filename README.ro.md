@@ -2,7 +2,9 @@
 
 [English](README.md) · **Română** · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versiune:** 2.0.0 · **Ultima actualizare:** 2026-10-26
+**Versiune:** 2.0.1 · **Ultima actualizare:** 2026-10-27
+
+**Stare:** stabil · **Offline:** complet
 
 Limbile interfeței: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -15,6 +17,14 @@ Ceas invers: nu timpul scurs, ci timpul rămas din zi și din săptămână, plu
 ## Ce este
 
 Un singur fișier HTML, fără dependențe externe, cu interfață în 8 limbi. Arată cât a mai rămas până la miezul nopții, cât a mai rămas din săptămâna de lucru (sau din weekend), ce activitate are loc „acum” după programul tău și câte ore au mai rămas azi din fiecare categorie. Pornește „de la un gând din cartea Nemurirea, despre ceasul biologic”.
+
+## Clepsidra, Clopoțel sau Orar? Care e diferența
+
+Trei aplicații surori, cu scopuri diferite. Nu își schimbă date între ele.
+
+- **CLEPSIDRA**: arată cât timp a mai rămas (din zi, din săptămâna de lucru sau din weekend), cu un program zilnic personal, evenimente, alarmă și rutine cu cronometre. Este pentru o singură persoană și pentru propria zi.
+- **[Clopoțel](https://chiuta.github.io/Clopotel/)**: cronometru de scenă cu clopoțel pentru conferințe: limitează timpul fiecărui vorbitor din agendă și are ecran pentru scenă.
+- **[Orar](https://chiuta.github.io/Orar/)**: calendar și program săptămânal (lună / săptămână / zi / agendă), cu evenimente, recurențe în stil RFC 5545, săptămâni ISO și sărbători legale; pentru planificarea pe termen mai lung.
 
 ## Funcții
 

@@ -2,7 +2,9 @@
 
 [English](README.md) · [Română](README.ro.md) · **Français** · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version :** 2.0.0 · **Dernière mise à jour :** 2026-10-26
+**Version :** 2.0.1 · **Dernière mise à jour :** 2026-10-27
+
+**État :** stable · **Hors ligne :** complet
 
 Langues de l'interface : **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -15,6 +17,14 @@ Horloge inversée : non pas le temps écoulé, mais le temps restant dans la jou
 ## De quoi s'agit-il
 
 Un seul fichier HTML, sans dépendances externes, avec une interface en 8 langues. Il indique combien de temps il reste jusqu'à minuit, combien il reste de la semaine de travail (ou du week-end), quelle activité a lieu « maintenant » selon votre emploi du temps, et combien d'heures il reste aujourd'hui dans chaque catégorie. Il part « d'une pensée du livre Nemurirea, sur l'horloge biologique ».
+
+## Clepsidra, Clopoțel ou Orar ? Quelle différence
+
+Trois applications sœurs, aux usages différents. Elles n'échangent pas de données entre elles.
+
+- **CLEPSIDRA**: montre le temps qu'il reste (dans la journée, la semaine de travail ou le week-end), avec un emploi du temps quotidien personnel, des événements, une alarme et des routines de minuteurs. Elle s'adresse à une seule personne et à sa propre journée.
+- **[Clopoțel](https://chiuta.github.io/Clopotel/)**: minuteur de scène avec clochette pour les conférences : il limite le temps de chaque intervenant de l'ordre du jour et offre un écran de scène.
+- **[Orar](https://chiuta.github.io/Orar/)**: calendrier et emploi du temps hebdomadaire (mois / semaine / jour / agenda) avec événements, récurrences de type RFC 5545, semaines ISO et jours fériés ; pour une planification à plus long terme.
 
 ## Fonctionnalités
 

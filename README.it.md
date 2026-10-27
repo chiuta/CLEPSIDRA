@@ -2,7 +2,9 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · **Italiano** · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versione:** 2.0.0 · **Ultimo aggiornamento:** 2026-10-26
+**Versione:** 2.0.1 · **Ultimo aggiornamento:** 2026-10-27
+
+**Stato:** stabile · **Offline:** completo
 
 Lingue dell'interfaccia: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -15,6 +17,14 @@ Orologio inverso: non il tempo trascorso, ma il tempo rimanente della giornata e
 ## Che cos'è
 
 Un unico file HTML, senza dipendenze esterne, con interfaccia in 8 lingue. Mostra quanto manca a mezzanotte, quanto resta della settimana lavorativa (o del fine settimana), quale attività si svolge «adesso» secondo il tuo programma e quante ore restano oggi per ciascuna categoria. Nasce «da un pensiero del libro Nemurirea, sull'orologio biologico».
+
+## Clepsidra, Clopoțel o Orar? Qual è la differenza
+
+Tre app sorelle con scopi diversi. Non si scambiano dati tra loro.
+
+- **CLEPSIDRA**: mostra quanto tempo resta (della giornata, della settimana lavorativa o del fine settimana), con un programma giornaliero personale, eventi, una sveglia e routine di timer. È pensata per una sola persona e per la sua giornata.
+- **[Clopoțel](https://chiuta.github.io/Clopotel/)**: timer da palco con campanello per le conferenze: limita il tempo di ogni relatore in programma e ha uno schermo per il palco.
+- **[Orar](https://chiuta.github.io/Orar/)**: calendario e orario settimanale (mese / settimana / giorno / agenda) con eventi, ricorrenze in stile RFC 5545, settimane ISO e festività; per la pianificazione a più lungo termine.
 
 ## Funzioni
 
