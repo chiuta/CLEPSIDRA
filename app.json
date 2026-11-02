@@ -21,8 +21,8 @@
     "clepsidra.run",
     "clepsidra.schedule"
   ],
-  "sizeBytes": 334447,
-  "sha256": "4ae67559772958c8d16022ab12b1c77a2d9a4cf18bc1bef10a9f0636cd41d0f1",
+  "sizeBytes": 474881,
+  "sha256": "54071b1936a4151b55dd61707f7af4e45a6ed70088853e5baf13e8d5e08d4082",
   "csp": {
     "present": true,
     "directives": {
@@ -62,6 +62,10 @@
       "dialog",
       "label",
       "bundle",
+      "qr",
+      "p2p",
+      "sync",
+      "history",
       "bridge"
     ]
   },
@@ -73,6 +77,10 @@
       "dialog",
       "label",
       "bundle",
+      "qr",
+      "p2p",
+      "sync",
+      "history",
       "bridge"
     ]
   },
