@@ -2,6 +2,10 @@
 
 Format: SemVer MAJOR.MINOR.PATCH. Date: AAAA-LL-ZZ.
 
+## 2.1.5 — 2026-11-08
+
+- Buton „Testează alarma (3 s)” lângă „activează”: sună o dată peste 3 secunde, fără să modifice alarma reală (8 limbi); test `test-alarma`.
+
 ## 2.1.2 — 2026-11-03
 
 - Nou (Etapa 6, suita cer–timp): **locația, ora și fusul orar comune** cu Eclipsa-2027, Bolta, Horizons, Universul Observabil 3D, ORARIUM, CLEPSIDRA și Orar (modul `fff-place`): butonul „📍 Locație” (formular, 38 de orașe, geolocalizare doar la cerere și cu acord explicit, plic `place/fff` prin fișier/clipboard/QR/link), panoul **„Astea se întâmplă deasupra ta mâine”** (Soare, Lună, planete, eclipse; calcul local, fără rețea) și **alertă la eclipsă**. Pe aceeași origine locația se propagă singură; între adrese diferite, printr-un link/plic (o apăsare). Vezi docs/SUITA-CER-TIMP.md în hub.
