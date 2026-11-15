@@ -13,6 +13,7 @@
     "serviceWorker",
     "localStorage",
     "Web Crypto",
+    "WebGL",
     "BroadcastChannel"
   ],
   "storageKeys": [
@@ -25,13 +26,13 @@
     "clepsidra.run",
     "clepsidra.schedule"
   ],
-  "sizeBytes": 688954,
-  "sha256": "2fc114ab74d80f6aa40fcbdb5a9999ff28eb883d0e59fe8cdf0edf0b679256fa",
+  "sizeBytes": 740962,
+  "sha256": "325400e40c7989afad380e272a32b89989a347cddc62aca1ac40e5284d8a845e",
   "csp": {
     "present": true,
     "directives": {
       "default-src": "'none'",
-      "script-src": "sha256×8",
+      "script-src": "sha256×9",
       "style-src": "'unsafe-inline'",
       "img-src": "'self' data:",
       "base-uri": "'none'",
